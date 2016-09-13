@@ -7,7 +7,7 @@ package sf.controle;
 
 import sf.modelo.UsuarioBEAN;
 import sf.modelo.UsuarioDAO;
-import static sf.modelo.Criptografia.criptografar;
+import sf.modelo.Criptografia;
 /**
  *
  * @author Alunos
@@ -21,7 +21,7 @@ public class UsuarioCONTROLE {
             UsuarioDAO udao = new UsuarioDAO();
             UsuarioBEAN u = new UsuarioBEAN();
             u.setUsuario(usuario);
-            u.setSenha(criptografar(senha1));
+            u.setSenha(senha1);
             udao.adiciona(u);
 
         } else {

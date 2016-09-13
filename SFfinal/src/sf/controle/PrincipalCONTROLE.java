@@ -73,7 +73,6 @@ public class PrincipalCONTROLE {
          for(int t=0; t<indexesRemover.size();t++){
              nao.remove(indexesRemover.get(t));
          }
-         System.out.println(nao.get(0).getPar_recCod());
          return nao;
      }
      

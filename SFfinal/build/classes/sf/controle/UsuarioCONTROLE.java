@@ -7,7 +7,7 @@ package sf.controle;
 
 import sf.modelo.UsuarioBEAN;
 import sf.modelo.UsuarioDAO;
-
+import sf.modelo.Criptografia;
 /**
  *
  * @author Alunos
