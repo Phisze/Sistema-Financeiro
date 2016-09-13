@@ -26,6 +26,7 @@ public class UsuarioDAO {
     Scanner sc = new Scanner(System.in);
     // a conexão com o banco de dados
     private Connection con;
+    private PreparedStatement stat;
 
     public UsuarioDAO() {
         //inicializa a conexão com o BD
@@ -136,6 +137,29 @@ public class UsuarioDAO {
             throw new RuntimeException(e);
         }
 
+        
+    }
+public boolean logar(String nome, String senha) {
+        ResultSet rs = null;
+        boolean res = false;
+        String sql = "select * from contato where conNome = ? and conSenha = md5(?);";
+
+        try {
+            stat = con.prepareStatement(sql);
+
+            stat.setString(1, nome);
+            stat.setString(2, senha);
+            rs = stat.executeQuery();
+
+            if (rs.next()) {
+                res = true;
+            }
+
+            stat.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
 }
