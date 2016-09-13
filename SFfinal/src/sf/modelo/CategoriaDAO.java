@@ -21,26 +21,6 @@ public class CategoriaDAO {
     }
     
     
-    public void subCatDelete(int codigo){
-        
-        String sql="delete from subcategoria where cat_scaCod=?;";
-        
-        try {
-            PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setInt(1, codigo);
-            
-            stmt.execute();
-            stmt.close();
-                       
-            
-        } catch (Exception e) {
-        throw new RuntimeException(e);
-        }
-        
-        
-    
-    
-    }
     
     public void atualizaCat(CategoriaBEAN cat) {
         String sql = "update empresa.categoria set catNome=? where catCod=?;";

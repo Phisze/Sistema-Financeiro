@@ -9,7 +9,7 @@ package sf.controle;
 import java.util.ArrayList;
 import sf.modelo.DespesaBEAN;
 import sf.modelo.ParcelaBEAN;
-import sf.modelo.ParcelaDAO1;
+import sf.modelo.ParcelaDAO;
 import sf.modelo.ReceitaBEAN;
 import sf.modelo.ReceitaDespesaDAO;
 
@@ -21,7 +21,7 @@ public class PrincipalCONTROLE {
     private boolean DESPESA=true;
     private boolean RECEITA=false;
     ReceitaDespesaDAO rdao;
-    ParcelaDAO1 rcd= new ParcelaDAO1();
+    ParcelaDAO rcd= new ParcelaDAO();
     
     public double somaSaldo(){
         ArrayList<ParcelaBEAN> rb = new ArrayList();
@@ -79,7 +79,7 @@ public class PrincipalCONTROLE {
      
      public void pagaParcela(int index, boolean tipo){
          ArrayList<ParcelaBEAN> p=retornaParcelas(tipo);
-         ParcelaDAO1 pdao= new ParcelaDAO1();
+         ParcelaDAO pdao= new ParcelaDAO();
          pdao.atualizaStatusParcela(p.get(index).getParCod());
      }
 }
