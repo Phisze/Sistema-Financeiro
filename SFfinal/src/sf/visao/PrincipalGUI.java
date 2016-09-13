@@ -54,7 +54,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         }
         jLabel5.setText(String.valueOf(saldo));
     }
-
+// Terminar para quando
     public void preencheTableContasAtraso() {
         ArrayList<ParcelaBEAN> pb = new ArrayList();
         
@@ -243,7 +243,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
         jToolBar1.add(jSeparator1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Saving Book-28.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Categoria.png"))); // NOI18N
         jButton1.setText("Nova Categoria");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

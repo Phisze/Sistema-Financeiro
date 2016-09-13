@@ -3,18 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/ReceitaDespesaDAO.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/CategoriaBEAN.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/controle/DespesasReceitasCONTROLE.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/visao/GerarRelatorioGUI.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/DespesaBEAN.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/ParcelaDAO.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/CategoriaDAO.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/visao/PrincipalGUI.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/visao/ReceitaDespesaGUI.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/controle/PrincipalCONTROLE.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/modelo/UsuarioDAO.java</file>
-            <file>file:/C:/Users/Administrador/GitDir/Sistema-Financeiro/SFfinal/src/sf/visao/GerenciarCategoriaGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/GerenciarCategoriaGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/controle/PrincipalCONTROLE.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/PrincipalGUIdes.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/modelo/ParcelaDAO.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/LoginGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/controle/DespesasReceitasCONTROLE.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/AtualizaCategoriaGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/GerarRelatorioGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/ReceitaDespesaGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/PrincipalGUI.java</file>
+            <file>file:/C:/Users/Weverton/Desktop/sf2/SFfinal/src/sf/visao/CadastrarGUI.java</file>
         </group>
     </open-files>
 </project-private>

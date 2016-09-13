@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package sf.visao;
-
+import sf.modelo.Criptografia;
 import javax.swing.JOptionPane;
 import sf.controle.UsuarioCONTROLE;
 import sf.modelo.UsuarioDAO;
@@ -164,6 +164,12 @@ public class LoginGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String usuario=jTextFieldUsu.getText().toString();
         String senha=jPasswordField1.getText().toString();
+        
+        String saida = "Entrada: " + senha + "\nSenha com MD5:"
++ Criptografia.criptografar(senha);
+System.out.println("Resultado: \n"+saida);
+
+        
         UsuarioCONTROLE uc=new UsuarioCONTROLE();
         int resp=uc.logar(usuario, senha);
         
