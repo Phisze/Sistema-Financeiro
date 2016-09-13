@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2016 11:20:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sf.modelo.Meta" table="meta" catalog="empresa" optimistic-lock="version">
+        <id name="metCod" type="java.lang.Integer">
+            <column name="metCod" />
+            <generator class="identity" />
+        </id>
+        <property name="metValor" type="java.lang.Double">
+            <column name="metValor" precision="22" scale="0" />
+        </property>
+        <property name="metDescricao" type="string">
+            <column name="metDescricao" length="65535" />
+        </property>
+        <property name="metNome" type="string">
+            <column name="metNome" length="45" />
+        </property>
+        <property name="metData" type="date">
+            <column name="metData" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

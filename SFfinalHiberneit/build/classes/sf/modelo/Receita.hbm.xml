@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2016 11:20:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sf.modelo.Receita" table="receita" catalog="empresa" optimistic-lock="version">
+        <id name="recCod" type="java.lang.Integer">
+            <column name="recCod" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="categoria" class="sf.modelo.Categoria" fetch="select">
+            <column name="rec_catCod" not-null="true" />
+        </many-to-one>
+        <property name="recDesc" type="string">
+            <column name="recDesc" length="45" />
+        </property>
+        <property name="recPago" type="java.lang.Boolean">
+            <column name="recPago" />
+        </property>
+        <property name="recNrodeParcelas" type="int">
+            <column name="recNrodeParcelas" not-null="true" />
+        </property>
+        <property name="recFixo" type="boolean">
+            <column name="recFixo" not-null="true" />
+        </property>
+        <set name="parcelas" table="parcela" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="par_recCod" />
+            </key>
+            <one-to-many class="sf.modelo.Parcela" />
+        </set>
+    </class>
+</hibernate-mapping>

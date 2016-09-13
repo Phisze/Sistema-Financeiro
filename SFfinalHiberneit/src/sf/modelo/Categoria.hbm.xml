@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2016 11:20:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sf.modelo.Categoria" table="categoria" catalog="empresa" optimistic-lock="version">
+        <id name="catCod" type="java.lang.Integer">
+            <column name="catCod" />
+            <generator class="identity" />
+        </id>
+        <property name="catNome" type="string">
+            <column name="catNome" length="65535" />
+        </property>
+        <property name="catDesc" type="string">
+            <column name="catDesc" length="65535" />
+        </property>
+        <set name="despesas" table="despesa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="des_catCod" not-null="true" />
+            </key>
+            <one-to-many class="sf.modelo.Despesa" />
+        </set>
+        <set name="receitas" table="receita" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="rec_catCod" not-null="true" />
+            </key>
+            <one-to-many class="sf.modelo.Receita" />
+        </set>
+    </class>
+</hibernate-mapping>

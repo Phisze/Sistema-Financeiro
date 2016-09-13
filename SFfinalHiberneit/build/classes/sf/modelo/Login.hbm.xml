@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2016 11:20:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sf.modelo.Login" table="login" catalog="empresa" optimistic-lock="version">
+        <id name="logUsuario" type="string">
+            <column name="logUsuario" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="logSenha" type="string">
+            <column name="logSenha" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>

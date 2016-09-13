@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 13/09/2016 11:20:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sf.modelo.Parcela" table="parcela" catalog="empresa" optimistic-lock="version">
+        <id name="parCod" type="java.lang.Integer">
+            <column name="parCod" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="despesa" class="sf.modelo.Despesa" fetch="select">
+            <column name="par_desCod" />
+        </many-to-one>
+        <many-to-one name="receita" class="sf.modelo.Receita" fetch="select">
+            <column name="par_recCod" />
+        </many-to-one>
+        <property name="parParcelaPaga" type="java.lang.Boolean">
+            <column name="parParcelaPaga" />
+        </property>
+        <property name="parData" type="date">
+            <column name="parData" length="10" />
+        </property>
+        <property name="parValor" type="double">
+            <column name="parValor" precision="22" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
