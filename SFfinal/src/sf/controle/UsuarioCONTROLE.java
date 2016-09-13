@@ -5,6 +5,7 @@
  */
 package sf.controle;
 
+import sf.modelo.Criptografia;
 import sf.modelo.UsuarioBEAN;
 import sf.modelo.UsuarioDAO;
 
@@ -21,7 +22,9 @@ public class UsuarioCONTROLE {
             UsuarioDAO udao = new UsuarioDAO();
             UsuarioBEAN u = new UsuarioBEAN();
             u.setUsuario(usuario);
-            u.setSenha(senha1);
+            Criptografia c=new Criptografia();
+            String saida = Criptografia.criptografar(senha1);
+            u.setSenha(saida);
             udao.adiciona(u);
 
         } else {

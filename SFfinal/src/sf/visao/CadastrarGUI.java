@@ -5,7 +5,6 @@
  */
 package sf.visao;
 
-import sf.visao.LoginGUI;
 import javax.swing.JOptionPane;
 import sf.controle.UsuarioCONTROLE;
 
