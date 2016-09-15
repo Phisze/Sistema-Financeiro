@@ -12,13 +12,13 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import sf.modelo.CategoriaBEAN;
+import sf.modelo.Categoria;
 import sf.modelo.CategoriaDAO;
 import sf.modelo.ConnectionFactory;
-import sf.modelo.DespesaBEAN;
-import sf.modelo.ParcelaBEAN;
+import sf.modelo.Despesa;
+import sf.modelo.Parcela;
 import sf.modelo.ParcelaDAO;
-import sf.modelo.ReceitaBEAN;
+import sf.modelo.Receita;
 import sf.modelo.ReceitaDespesaDAO;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -62,10 +62,10 @@ public class DespesasReceitasCONTROLE {
     public double getValor(int LANCAMENTOCOD, boolean tipo){
         ParcelaDAO pd=new ParcelaDAO();
         
-        ArrayList<ParcelaBEAN> pb;
+        ArrayList<Parcela> pb;
         
         pb=pd.getParcela(LANCAMENTOCOD, tipo);
-        pb.add(new ParcelaBEAN());
+        pb.add(new Parcela());
        
        
         double valor =(double) pb.get(0).getParValor();
@@ -82,11 +82,11 @@ public class DespesasReceitasCONTROLE {
         
         ParcelaDAO pd= new ParcelaDAO();
         
-        ArrayList<ParcelaBEAN> pb= new ArrayList<ParcelaBEAN>();
+        ArrayList<Parcela> pb= new ArrayList<Parcela>();
         
         pb=pd.getParcela(LANCAMENTOCOD, tipo);
        
-        pb.add(new ParcelaBEAN());
+        pb.add(new Parcela());
         
         GregorianCalendar gc= new GregorianCalendar();
         
@@ -104,11 +104,11 @@ public class DespesasReceitasCONTROLE {
         
         String categoria="nulo";
         
-        ArrayList<CategoriaBEAN> cb= new ArrayList<CategoriaBEAN>();
+        ArrayList<Categoria> cb= new ArrayList<Categoria>();
         
         cb=retornaCategoria();
         
-        for(CategoriaBEAN c: cb){
+        for(Categoria c: cb){
             if(c.getCatCod()==CODCATEGORIA){
             categoria=c.getCatNome();
             }
@@ -119,33 +119,35 @@ public class DespesasReceitasCONTROLE {
     
     }
 
-    public ArrayList<CategoriaBEAN> retornaCategoria() {
+    public ArrayList<Categoria> retornaCategoria() {
         cdao = new CategoriaDAO();
-        ArrayList<CategoriaBEAN> catbox = new ArrayList<CategoriaBEAN>();
+        ArrayList<Categoria> catbox = new ArrayList<Categoria>();
         cdao.pegaCat(catbox);
         return catbox;
 
     }
 
     public void selecionaCategoria(int index) {
-        ArrayList<CategoriaBEAN> p = new ArrayList();
+        ArrayList<Categoria> p = new ArrayList();
         cdao.pegaCat(p);
         categoriaSelecionada = p.get(index).getCatCod();
     }
 
     public int adicionaDespesa(String desc, boolean desPago, int desNrodeParcelas, boolean desFixo) {
         ReceitaDespesaDAO rdd = new ReceitaDespesaDAO();
-        DespesaBEAN db = new DespesaBEAN();
+        Despesa db = new Despesa();
 
         db.setDesDesc(desc);
         db.setDesPago(desPago);
         db.setDesNrodeParcelas(desNrodeParcelas);
         db.setDesFixo(desFixo);
-        db.setDes_catCod(categoriaSelecionada);
+        Categoria c=new Categoria();
+        c.setCatCod(categoriaSelecionada);
+        db.setCategoria(c);
         rdd.adicionaDespesa(db);
 
         //pegando o codigo da despesa adicionada
-        ArrayList<DespesaBEAN> cod = new ArrayList<DespesaBEAN>();
+        ArrayList<Despesa> cod = new ArrayList<Despesa>();
         cod = rdd.getDespesa();
 
         return codRDacicionado = cod.get(cod.size() - 1).getDesCod();
@@ -154,22 +156,24 @@ public class DespesasReceitasCONTROLE {
     
     public void adicionaReceita(String desc, boolean recPago, int recNrodeParcelas, boolean recFixo) {
         ReceitaDespesaDAO rdd = new ReceitaDespesaDAO();
-        ReceitaBEAN rb = new ReceitaBEAN();
+        Receita rb = new Receita();
         rb.setRecDesc(desc);
         rb.setRecPago(recPago);
         rb.setRecNrodeParcelas(recNrodeParcelas);
         rb.setRecFixo(recFixo);
-        rb.setRec_catCod(categoriaSelecionada);
+        Categoria c=new Categoria();
+        c.setCatCod(categoriaSelecionada);
+        rb.setCategoria(c);
         rdd.adicionaReceita(rb);
 
         //pegando o codigo da receita adicionada
-        ArrayList<ReceitaBEAN> cod = new ArrayList<ReceitaBEAN>();
+        ArrayList<Receita> cod = new ArrayList<Receita>();
         cod = rdd.getReceita();
 
         codRDacicionado = cod.get(cod.size() - 1).getRecCod();
     }
 
-    public ArrayList<ReceitaBEAN> pegaReceita(){
+    public ArrayList<Receita> pegaReceita(){
         
         ReceitaDespesaDAO rdd=new ReceitaDespesaDAO();
         
@@ -177,7 +181,7 @@ public class DespesasReceitasCONTROLE {
         
     }
     
-    public ArrayList<DespesaBEAN> pegaDespesa(){
+    public ArrayList<Despesa> pegaDespesa(){
         
         ReceitaDespesaDAO rdd=new ReceitaDespesaDAO();
         
@@ -187,17 +191,17 @@ public class DespesasReceitasCONTROLE {
     
     
 
-    public void add(ParcelaBEAN pb, boolean receitaoudespesa) {
+    public void add(Parcela pb, boolean receitaoudespesa) {
         ParcelaDAO pd = new ParcelaDAO();
 
         if (receitaoudespesa == DESPESA) {
 
-            pb.setPar_desCod(codRDacicionado);
+            pb.getDespesa().setDesCod(codRDacicionado);
             pd.adicionaParcelaDespesa(pb);
 
         } else if (receitaoudespesa == RECEITA) {
 
-            pb.setPar_recCod(codRDacicionado);
+            pb.getReceita().setRecCod(codRDacicionado);
             pd.adicionaParcelaReceita(pb);
 
         }
@@ -206,7 +210,7 @@ public class DespesasReceitasCONTROLE {
 
     public void adicionaParcela(double valor, java.util.Date data, boolean parParcelaPaga, int nroParcela, int periodo, boolean receitaoudespesa, int tipo) {
         ParcelaDAO pd = new ParcelaDAO();
-        ParcelaBEAN pb = new ParcelaBEAN();
+        Parcela pb = new Parcela();
         pb.setParParcelaPaga(parParcelaPaga);
         pb.setParValor(valor);
       //  pb.setParData(data);

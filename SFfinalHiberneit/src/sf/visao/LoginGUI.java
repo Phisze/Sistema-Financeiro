@@ -7,7 +7,7 @@ package sf.visao;
 import sf.modelo.Criptografia;
 import javax.swing.JOptionPane;
 import sf.controle.UsuarioCONTROLE;
-import sf.modelo.UsuarioDAO;
+import sf.modelo.LoginDAO;
 import sf.visao.CadastrarGUI;
 
 /**
@@ -19,7 +19,7 @@ public class LoginGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginGUI
      */
-    UsuarioDAO udao = new UsuarioDAO();
+    LoginDAO udao = new LoginDAO();
 
     public LoginGUI() {
         initComponents();

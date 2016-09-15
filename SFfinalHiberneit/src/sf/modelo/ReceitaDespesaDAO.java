@@ -111,6 +111,11 @@ public class ReceitaDespesaDAO {
                 if(!rs.getString("recDesc").equals(" ")){
                 r1.setRecDesc(rs.getString("recDesc"));
                 }
+                
+             //   Categoria c=new Categoria();
+            //    c.setCatCod(rs.getInt("rec_catCod"));
+            //    r1.setCategoria(c);
+                
                 r1.setRecPago(rs.getBoolean("recPago"));
                 r1.setRecNrodeParcelas(rs.getInt("recNrodeParcelas"));
                 r1.setRecFixo(rs.getBoolean("recFixo"));  

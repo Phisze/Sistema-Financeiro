@@ -47,25 +47,7 @@ public class ParcelaDAO {
 
     }
 
-    public void adicionaParcelaReceitaFixa(Parcela parcelaR) {
-        String sql = "insert into fixo (fix_recCod,fixPago,fixData,fixValor) values (?,?,?,?);";
-        try {
-
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, parcelaR.getDespesa().getCategoria().getCatCod());
-            stmt.setBoolean(2, parcelaR.getParParcelaPaga());
-            java.sql.Date dataSql=new java.sql.Date(parcelaR.getParData().getTime());
-            stmt.setDate(3, dataSql);
-            stmt.setDouble(4, parcelaR.getParValor());
-
-            stmt.execute();
-            stmt.close();
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+ 
 
     public void adicionaParcelaDespesa(Parcela parcelaD) {
         String sql = "insert into parcela (par_desCod,parValor,parData,parParcelaPaga) values (?,?,?,?);";
@@ -86,26 +68,7 @@ public class ParcelaDAO {
 
     }
 
-    public void adicionaParcelaDespesaFixa(Parcela parcelaD) {
-        String sql = "insert into fixo (fix_desCod,fixPago,fixData,fixValor) values (?,?,?,?);";
-        try {
-
-            PreparedStatement stmt = con.prepareStatement(sql);
-
-            stmt.setInt(1, parcelaD.getPar_desCod());
-            stmt.setBoolean(2, parcelaD.isParParcelaPaga());
-            stmt.setDate(3, parcelaD.getParData());
-            stmt.setDouble(4, parcelaD.getParValor());
-
-            stmt.execute();
-            stmt.close();
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-        }
-
-    }
+    
 
     public void deletaParcela(int Codigo) {
         String sql = "delete from parcela where parCod=?;";
@@ -144,7 +107,7 @@ public class ParcelaDAO {
         }
     }
 
-    public ArrayList<ParcelaBEAN> getParcela(int codigo, boolean tipo) {
+    public ArrayList<Parcela> getParcela(int codigo, boolean tipo) {
         
         String sql = " ";
 
@@ -158,7 +121,7 @@ public class ParcelaDAO {
 
         }
 
-        ArrayList<ParcelaBEAN> p = new ArrayList<ParcelaBEAN>();
+        ArrayList<Parcela> p = new ArrayList<Parcela>();
 
         try {
 
@@ -169,10 +132,14 @@ public class ParcelaDAO {
 
             rs.first();
             if (rs.first()) {
-                ParcelaBEAN p1 = new ParcelaBEAN();
+                Parcela p1 = new Parcela();
                 p1.setParCod(rs.getInt("parCod"));
-                p1.setPar_recCod(rs.getInt("par_recCod"));
-                p1.setPar_desCod(rs.getInt("par_desCod"));
+                Despesa d1=new Despesa();
+                d1.setDesCod(rs.getInt("par_desCod"));
+                Receita r1=new Receita();
+                r1.setRecCod(rs.getInt("par_recCod"));
+                p1.setReceita(r1);
+                p1.setDespesa(d1);
                 p1.setParData(rs.getDate("parData"));
                 p1.setParParcelaPaga(rs.getBoolean("parParcelaPaga"));
                 p1.setParValor(rs.getDouble("parValor"));
@@ -188,29 +155,7 @@ public class ParcelaDAO {
         return p;
     }
 
-    public ArrayList<ParcelaBEAN> getParcelaFixa() {
-        String sql = "select * from fixo;";
-        ArrayList<ParcelaBEAN> p = new ArrayList();
-        try {
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                ParcelaBEAN p1 = new ParcelaBEAN();
-                p1.setParCod(rs.getInt("fixCod"));
-                p1.setPar_recCod(rs.getInt("fix_recCod"));
-                p1.setPar_desCod(rs.getInt("fix_desCod"));
-                p1.setParData(rs.getDate("fixData"));
-                p1.setParParcelaPaga(rs.getBoolean("fixPago"));
-                p1.setParValor(rs.getDouble("fixValor"));
-                p.add(p1);
 
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return p;
-    }
 
     public void atualizaStatusParcela(int codigo) {
         String sql = "update parcela set parParcelaPaga=1 where parCod=?;";
@@ -227,10 +172,10 @@ public class ParcelaDAO {
         }
     }
 
-    public ArrayList<ParcelaBEAN> getParcela(int codigo) {
+    public ArrayList<Parcela> getParcela(int codigo) {
         String sql = "select * from parcela where parParcelaPaga=?";
 
-        ArrayList<ParcelaBEAN> p = new ArrayList();
+        ArrayList<Parcela> p = new ArrayList();
 
         try {
 
@@ -240,10 +185,14 @@ public class ParcelaDAO {
 
             while (rs.next()) {
 
-                ParcelaBEAN p1 = new ParcelaBEAN();
+                Parcela p1 = new Parcela();
                 p1.setParCod(rs.getInt("parCod"));
-                p1.setPar_recCod(rs.getInt("par_recCod"));
-                p1.setPar_desCod(rs.getInt("par_desCod"));
+                Despesa d1=new Despesa();
+                Receita r1=new Receita();
+                d1.setDesCod(rs.getInt("par_desCod"));
+                r1.setRecCod(rs.getInt("par-recCod"));
+                p1.setDespesa(d1);
+                p1.setReceita(r1);              
                 p1.setParData(rs.getDate("parData"));
                 p1.setParParcelaPaga(rs.getBoolean("parParcelaPaga"));
                 p1.setParValor(rs.getDouble("parValor"));

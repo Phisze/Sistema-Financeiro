@@ -21,23 +21,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
-public class UsuarioDAO {
+public class LoginDAO {
 
     Scanner sc = new Scanner(System.in);
     // a conexão com o banco de dados
     private Connection con;
 
-    public UsuarioDAO() {
+    public LoginDAO() {
         //inicializa a conexão com o BD
       this.con =  ConnectionFactory.getConnection();
     }
 
-    public boolean logar(UsuarioBEAN usuario) {
+    public boolean logar(Login usuario) {
         int logado = 0;
-        UsuarioDAO udao = new UsuarioDAO();
-        ArrayList<UsuarioBEAN> u = udao.getUsuarios();
-        for (UsuarioBEAN us : u) {
-            if (us.getUsuario().equals(usuario.getUsuario()) && us.getSenha().equals(usuario.getSenha())) {
+        LoginDAO udao = new LoginDAO();
+        ArrayList<Login> u = udao.getUsuarios();
+        for (Login us : u) {
+            if (us.getLogUsuario().equals(usuario.getLogUsuario()) && us.getLogSenha().equals(usuario.getLogSenha())) {
                 logado = 1;
                 break;
             }
@@ -49,11 +49,11 @@ public class UsuarioDAO {
         }
     }
 
-    public void adiciona(UsuarioBEAN usuario) {
-        UsuarioDAO udao = new UsuarioDAO();
-        ArrayList<UsuarioBEAN> u = udao.getUsuarios();
-        for (UsuarioBEAN us : u) {
-            if (us.getUsuario().equals(usuario.getUsuario())) {
+    public void adiciona(Login usuario) {
+        LoginDAO udao = new LoginDAO();
+        ArrayList<Login> u = udao.getUsuarios();
+        for (Login us : u) {
+            if (us.getLogUsuario().equals(usuario.getLogUsuario())) {
                 System.out.println("Usuario já existente, tente com um novo usuário");
                 return;
             }
@@ -67,8 +67,8 @@ public class UsuarioDAO {
             PreparedStatement stmt = con.prepareStatement(sql);
 
             // seta os valores
-            stmt.setString(1, usuario.getUsuario());
-            stmt.setString(2, usuario.getSenha());
+            stmt.setString(1, usuario.getLogUsuario());
+            stmt.setString(2, usuario.getLogSenha());
             // executa
             stmt.execute();
             stmt.close();
@@ -95,9 +95,9 @@ public class UsuarioDAO {
         }
     }
 
-    public ArrayList<UsuarioBEAN> getUsuarios() {
+    public ArrayList<Login> getUsuarios() {
         String sql = "select * from login;";
-        ArrayList<UsuarioBEAN> a = new ArrayList();
+        ArrayList<Login> a = new ArrayList();
         try {
             // prepared statement para inserção
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -106,9 +106,9 @@ public class UsuarioDAO {
             ResultSet rs = stmt.executeQuery();
             //joga resultado da consulta no ArrayList
             while (rs.next()) {
-                UsuarioBEAN x = new UsuarioBEAN();
-                x.setUsuario(rs.getString("logUsuario"));
-                x.setSenha(rs.getString("logSenha"));
+                Login x = new Login();
+                x.setLogUsuario(rs.getString("logUsuario"));
+                x.setLogSenha(rs.getString("logSenha"));
                 a.add(x);
             }
             stmt.close();

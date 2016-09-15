@@ -5,9 +5,9 @@
  */
 package sf.controle;
 
-import sf.modelo.UsuarioBEAN;
-import sf.modelo.UsuarioDAO;
-import sf.modelo.Criptografia;
+import sf.modelo.Login;
+import sf.modelo.LoginDAO;
+//import sf.modelo.Criptografia;
 /**
  *
  * @author Alunos
@@ -18,10 +18,10 @@ public class UsuarioCONTROLE {
         int resp = 0;
 
         if (senha1.equals(senha2)) {
-            UsuarioDAO udao = new UsuarioDAO();
-            UsuarioBEAN u = new UsuarioBEAN();
-            u.setUsuario(usuario);
-            u.setSenha(senha1);
+            LoginDAO udao = new LoginDAO();
+            Login u = new Login();
+            u.setLogUsuario(usuario);
+            u.setLogSenha(senha1);
             udao.adiciona(u);
 
         } else {
@@ -32,10 +32,10 @@ public class UsuarioCONTROLE {
 
     public int logar(String usuario, String senha) {
         int resp = 0;
-        UsuarioDAO udao = new UsuarioDAO();
-        UsuarioBEAN u = new UsuarioBEAN();
-        u.setUsuario(usuario);
-        u.setSenha(senha);
+        LoginDAO udao = new LoginDAO();
+        Login u = new Login();
+        u.setLogUsuario(usuario);
+        u.setLogSenha(senha);
         if (udao.logar(u) == true) {
             resp = 1;
         }

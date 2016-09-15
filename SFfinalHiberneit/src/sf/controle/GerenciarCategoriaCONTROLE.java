@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import sf.modelo.CategoriaBEAN;
+import sf.modelo.Categoria;
 import sf.modelo.CategoriaDAO;
 import sf.modelo.ConnectionFactory;
 
@@ -24,9 +24,9 @@ public class GerenciarCategoriaCONTROLE {
     private int catcod;
     //   private int categoriaSelecionada;
 
-    public ArrayList<CategoriaBEAN> retornaCategorias() {
+    public ArrayList<Categoria> retornaCategorias() {
         cdao = new CategoriaDAO();
-        ArrayList<CategoriaBEAN> categorias = new ArrayList<>();
+        ArrayList<Categoria> categorias = new ArrayList<>();
         categorias = cdao.getCategoria();
         return categorias;
         //  jList1.setListData(categorias.toArray());
@@ -35,13 +35,13 @@ public class GerenciarCategoriaCONTROLE {
     public int selecionaCategoria(int index) {
 
         cdao=new CategoriaDAO();
-        ArrayList<CategoriaBEAN> cb=cdao.pegaCat();
+        ArrayList<Categoria> cb=cdao.pegaCat();
         return cb.get(index).getCatCod();
    
     }
 
     public void getCatCodigo(int index) {
-        ArrayList<CategoriaBEAN> cate = new ArrayList<>();
+        ArrayList<Categoria> cate = new ArrayList<>();
         this.pegaCat(cate);
         catcod = cate.get(index).getCatCod();
     }
@@ -53,27 +53,27 @@ public class GerenciarCategoriaCONTROLE {
 
     }
 
-    public void atualizaCategoria(CategoriaBEAN cat) {
+    public void atualizaCategoria(Categoria cat) {
         CategoriaDAO cd = new CategoriaDAO();
         cd.atualizaCat(cat);
     }
 
-    public void pegaCat(ArrayList<CategoriaBEAN> a) {
+    public void pegaCat(ArrayList<Categoria> a) {
         CategoriaDAO cd = new CategoriaDAO();
         cd.pegaCat(a);
 
     }
 
     public void inserirCategoria(String nome, String desc) {
-        CategoriaBEAN c = new CategoriaBEAN();
+        Categoria c = new Categoria();
         c.setCatNome(nome);
-        c.setCatDescricao(desc);
+        c.setCatDesc(desc);
         cdao = new CategoriaDAO();
         cdao.adiciona(c);
 
     }
 
-    public ArrayList<CategoriaBEAN> pegaCat() {
+    public ArrayList<Categoria> pegaCat() {
         CategoriaDAO cd = new CategoriaDAO();
         return cd.pegaCat();
     }
