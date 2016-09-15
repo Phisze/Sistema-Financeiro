@@ -1,6 +1,0 @@
-sistemafinanceiro.visao.GerenciarCategoriaGUI$4
-sistemafinanceiro.visao.GerenciarCategoriaGUI$5
-sistemafinanceiro.visao.GerenciarCategoriaGUI
-sistemafinanceiro.visao.GerenciarCategoriaGUI$1
-sistemafinanceiro.visao.GerenciarCategoriaGUI$2
-sistemafinanceiro.visao.GerenciarCategoriaGUI$3

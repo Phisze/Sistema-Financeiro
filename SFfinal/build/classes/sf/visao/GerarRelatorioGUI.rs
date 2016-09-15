@@ -1,3 +1,0 @@
-sistemafinanceiro.visao.GerarRelatorioGUI
-sistemafinanceiro.visao.GerarRelatorioGUI$1
-sistemafinanceiro.visao.GerarRelatorioGUI$2
