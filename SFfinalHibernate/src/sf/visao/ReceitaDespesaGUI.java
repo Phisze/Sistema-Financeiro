@@ -5,29 +5,18 @@
  */
 package sf.visao;
 
-import java.awt.Font;
 import java.util.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.text.MaskFormatter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import sf.controle.DespesasReceitasCONTROLE;
 import sf.controle.GerenciarCategoriaCONTROLE;
-import sf.modelo.CategoriaBEAN;
-import sf.modelo.CategoriaDAO;
-import sf.modelo.DespesaBEAN;
-import sf.modelo.ParcelaBEAN;
-import sf.modelo.ParcelaDAO;
-import sf.modelo.ReceitaBEAN;
-import sf.modelo.ReceitaDespesaDAO;
+import sf.modelo.Categoria;
+import sf.modelo.Despesa;
+import sf.modelo.Receita;
 
 /**
  *
@@ -61,23 +50,29 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
     private final int SEMESTRAL = 6;
     private final int ANUAL = 7;
 
-    private ArrayList<DespesaBEAN> despesas;
-    private ArrayList<ReceitaBEAN> receitas;
+    private ArrayList<Despesa> despesas;
+    private ArrayList<Receita> receitas;
 
     public ReceitaDespesaGUI() {
         initComponents();
         meuInit();
+        AutoCompleteDecorator.decorate(jComboCat);
+        AutoCompleteDecorator.decorate(jComboPeriodo);
+        AutoCompleteDecorator.decorate(jComboNumero);
+        AutoCompleteDecorator.decorate(jComboTempo);
+
+                
         //      System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
 
     }
 
     public void meuInit() {
 
-        ArrayList<CategoriaBEAN> cb = drc.retornaCategoria();
+        ArrayList<Categoria> cb = drc.retornaCategoria();
 
         gcc = new GerenciarCategoriaCONTROLE();
 
-        for (CategoriaBEAN c : cb) {
+        for (Categoria c : cb) {
             jComboCat.addItem(c.getCatNome());
 
         }
@@ -106,7 +101,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         String[] linha=new String[]{"","","",""};
 
-        for (DespesaBEAN c : despesas) {
+        for (Despesa c : despesas) {
             
             String pago;
 
@@ -120,7 +115,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             linha = new String[]{
                 valor+"",
                 drc.getData(c.getDesCod(), DESPESA)+"", 
-                drc.getCat(c.getDes_catCod())+"",
+                drc.getCat(c.getCategoria().getCatCod())+"",
                 pago+"", 
                 c.getDesDesc()+""
             };
@@ -131,7 +126,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         tablemodel = new DefaultTableModel(null, colunas);
 
-        for (ReceitaBEAN r : receitas) {
+        for (Receita r : receitas) {
 
             String pago;
 
@@ -143,7 +138,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             
             linha = new String[]{String.valueOf(drc.getValor(r.getRecCod(), RECEITA)),
                 drc.getData(r.getRecCod(), RECEITA), 
-                drc.getCat(r.getRec_catCod()), 
+                drc.getCat(r.getRecCod()), 
                 pago,
                 r.getRecDesc()};
             tablemodel.addRow(linha);
@@ -156,7 +151,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
     public void pegaLancamento(int index, boolean tipo) {
 
         if (tipo == DESPESA) {
-            tableCatCodigo = despesas.get(index).getDes_catCod();
+            tableCatCodigo = despesas.get(index).getCategoria().getCatCod();
             DRATT = true;
 
             jRadioDespesa.setSelected(true);
@@ -172,7 +167,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             }
 
         } else if (tipo == RECEITA) {
-            tableCatCodigo = receitas.get(index).getRec_catCod();
+            tableCatCodigo = receitas.get(index).getCategoria().getCatCod();
             DRATT = false;
 
             jRadioDespesa.setSelected(false);
