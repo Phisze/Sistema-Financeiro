@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-10-22T14:25:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contasP" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f13abcd9-f16a-42fb-b80a-5e44886f61e6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="contasP"/>
+	<parameter name="data" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select parData,parValor,desDesc from despesa join parcela where par_desCod=desCod and parData>$P{data}]]>
+	</queryString>
+	<field name="parData" class="java.sql.Date"/>
+	<field name="parValor" class="java.lang.Double"/>
+	<field name="desDesc" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{parData}]]></groupExpression>
+		<groupHeader>
+			<band height="35">
+				<textField pattern="dd MMMMM yyyy">
+					<reportElement mode="Opaque" x="370" y="8" width="205" height="25" forecolor="#006699" backcolor="#E6E6E6" uuid="65b39ab2-7f16-49c9-bf90-08358c4a04d6"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+						<paragraph lineSpacing="1_1_2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{parData}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="17bad478-52b3-4e77-915b-994bfbd89198"/>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="-18" y="10" width="200" height="25" uuid="d06090d3-aa92-42da-b7a6-9922f2ecf624"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{parValor}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="182" y="8" width="190" height="25" uuid="9aa90c59-ddd9-40d8-ad22-9795ed7ca0d9"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{desDesc}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="535" y="-15" width="40" height="13" backcolor="#E6E6E6" uuid="f8d3fdfe-d2bd-4ed2-a377-5126a8802b10"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="b4953e14-5c82-42de-a73f-3a7e9aa6497c"/>
+				<staticText>
+					<reportElement x="20" y="0" width="270" height="43" forecolor="#FFFFFF" uuid="236320bb-2dfe-4b2a-909d-e6e9e1815b5b"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Contas a pagar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="50" width="180" height="20" forecolor="#FFFFFF" uuid="690bc7ec-6e8a-4805-aa29-1e0ea6380993"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Contas que voce deve pagar]]></text>
+				</staticText>
+				<image>
+					<reportElement x="480" y="8" width="109" height="77" uuid="5a8516d3-df94-485c-8ef5-ada250476507"/>
+					<imageExpression><![CDATA["C:/Users/Weverton/Desktop/SFfinal/src/logo.png"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e55e1850-2aba-405b-bd2e-51d1576b18da"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="-20" y="10" width="200" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="bdabdb86-7401-4cbf-9dc6-6f606cc79938"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor a pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="10" width="190" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="75a4ce09-002b-48ac-af93-fa18d9682e3b"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição da sua despesa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="10" width="205" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="67887d68-b4dc-40bb-9658-6ea82812e4cf"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da despesa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="4b3539d8-5c48-4fae-9420-f10ca73f7003"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="-20" y="4" width="555" height="13" backcolor="#E6E6E6" uuid="57be9e81-53c3-452a-9cd9-baabdcda91ad"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="-20" y="4" width="200" height="13" uuid="1bb413f1-e957-4e19-9df2-392c90807c11"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
