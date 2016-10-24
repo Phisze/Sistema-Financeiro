@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-10-24T19:03:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReT" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba3fef1e-af0e-4636-94db-04a8d99e8d4c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EmpresaAdapter"/>
+	<parameter name="dataum" class="java.sql.Date">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="datadois" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select parData,parValor,desDesc from despesa join parcela where par_desCod=desCod and parParcelaPaga=0 and parData>$P{dataum} and parData<$P{datadois};]]>
+	</queryString>
+	<field name="parData" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parValor" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desDesc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{parData}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField>
+					<reportElement mode="Opaque" x="313" y="-4" width="242" height="19" forecolor="#006699" backcolor="#E6E6E6" uuid="341f8dbe-dfd5-4a9c-9a9d-ce78aa58df37"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[DATEFORMAT($F{parData},"dd MMMMM yyyy")]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="-5" width="554" height="1" forecolor="#666666" uuid="af0d37f7-9c9f-4b3f-9eb2-d4aa7d488bbe"/>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="150" y="-5" width="163" height="20" uuid="d545959f-2d72-4c23-81ea-ac2bbd138964"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{desDesc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="0" y="-5" width="150" height="20" uuid="34e60e47-a542-4063-83de-95d42e718c76"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["R$ "+$F{parValor}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="d1ded450-1554-42b5-93d2-252a76d3c0d1"/>
+				<staticText>
+					<reportElement x="20" y="10" width="440" height="43" forecolor="#FFFFFF" uuid="44bcd521-8720-46bf-895d-8a86032eb8c9"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Relatório de Despesas]]></text>
+				</staticText>
+				<image>
+					<reportElement x="474" y="5" width="100" height="87" uuid="c86b95ce-d408-4ed4-b3a5-94c6cd1bc61b"/>
+					<imageExpression><![CDATA["C:/Users/Administrador/Documents/NetBeansProjects/SFRelatThomas/SFfinal/src/logo.png"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="30" y="60" width="420" height="19" forecolor="#FFFFFF" uuid="86f20ff6-84bd-4926-8aed-50e66d43087f"/>
+					<textElement>
+						<font size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Não pagas. De: "+DATEFORMAT($P{dataum},"dd MMMMM yyyy")+" a "+DATEFORMAT($P{datadois},"dd MMMMM yyyy")]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25">
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" forecolor="#666666" uuid="0e5ca77b-4a56-4ca6-a312-59e53cb5c10a"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b12c5bb2-b4c2-4acf-ab10-14e6b6a9c93d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="150" y="0" width="163" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6e70114d-a40c-406f-8b0f-240f66de5b2b"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="313" y="0" width="242" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dc313624-e09c-49ce-9793-2b9b060c9240"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="5"/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="6d6f2f39-0247-46b7-b8c9-8ef4fd03e549"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="aba0ef74-1cf4-4085-84df-63aa2c348c91"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="ed43c8e7-bd85-413b-9d3c-125d714e05c0"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

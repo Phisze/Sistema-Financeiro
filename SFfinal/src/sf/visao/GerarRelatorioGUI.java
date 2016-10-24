@@ -18,6 +18,8 @@ import sf.controle.RelatorioCONTROLE;
  */
 public class GerarRelatorioGUI extends javax.swing.JFrame {
 
+    private boolean DESPESA=true;
+    private boolean RECEITA=false;
     /**
      * Creates new form GR
      */
@@ -38,6 +40,44 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
 
         }
     }
+    
+    
+        //gerarRelatorioT (Thomas) é o método do meu tipo de relatório, é bom criar um método para cada um de nós
+    //Assim, o algoritmo fica menos sucetível a erros e é mais fácil de consertar se der problema em algum tipo de relatório.
+    public void geraRelatorioT(boolean tipo){
+    
+        RelatorioCONTROLE rec=new RelatorioCONTROLE();
+        String sql="";
+        //Verifica o tipo do relatório e manipula a string para fazer a consulta correta.
+        if(tipo==DESPESA){
+            sql="select parData,parValor,desDesc from despesa join parcela where par_desCod=desCod and parData>? and parData<?;";
+        }
+        else if(tipo==RECEITA){
+            sql="select parData,parValor,recDesc from receita join parcela where par_recCod=recCod and parData>? and parData<?;";
+        }
+        
+        //Pega as datas iniciais e finais dos campos de data e os converte em date.
+        String datau=jDataRecIni.getText();
+        String datad=jDataRecFim.getText();
+        DateFormat formatter=new SimpleDateFormat("dd/MM/yyyy");
+        GregorianCalendar gc=new GregorianCalendar();
+        
+        try{
+            java.util.Date d1=formatter.parse(datau);
+            java.util.Date d2=formatter.parse(datad);
+            
+            java.sql.Date paraum=new java.sql.Date(d1.getTime());
+            
+            java.sql.Date paradois=new java.sql.Date(d2.getTime());
+            
+            //Passa-se os parâmetros necessários para gerar o relatório
+            rec.geraRelatorioT(sql, paraum, paradois, tipo);
+            
+        }catch(Exception e){
+        e.printStackTrace();}
+    
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -463,6 +503,19 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+         if(!jDataRecIni.getText().startsWith(" ") && !jDataRecFim.getText().startsWith(" ")){            
+            if(jCheckRec.isSelected()){
+                geraRelatorioT(RECEITA);
+                
+            }
+            else if(jCheckDes.isSelected()){
+                geraRelatorioT(DESPESA);            
+            }
+            
+        }
+        
+        
         if (checkCat.isSelected()) {
             String query = "SELECT * FROM categoria;";
             try {
