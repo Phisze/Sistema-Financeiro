@@ -39,7 +39,7 @@ public class RelatorioCONTROLE {
 
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\SFfinal\\relatorios\\contasR.jrxml");
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\contasR.jrxml");
             JasperPrint impressao = JasperFillManager.fillReport(report, new HashMap(), jrRS);
 
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");
@@ -71,7 +71,7 @@ public class RelatorioCONTROLE {
 
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\SFfinal\\relatorios\\contasP.jrxml");
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\contasP.jrxml");
             JasperPrint impressao = JasperFillManager.fillReport(report, new HashMap(), jrRS);
 
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");

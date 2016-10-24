@@ -33,7 +33,7 @@ public class GeraRelatorioCategoriaCONTROLE {
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
             Map parameters = new HashMap();
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Alunos\\Desktop\\SFfinal(Relatório de Categoria Terminado)\\rel\\Categoria2.jrxml");
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\rel\\Categoria2.jrxml");
             JasperPrint impressao = JasperFillManager.fillReport(report, parameters, jrRS);
 
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");
