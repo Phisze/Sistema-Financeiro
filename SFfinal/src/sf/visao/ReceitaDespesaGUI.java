@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import sf.controle.DespesasReceitasCONTROLE;
 import sf.controle.GerenciarCategoriaCONTROLE;
 import sf.modelo.CategoriaBEAN;
@@ -68,6 +69,10 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
         initComponents();
         meuInit();
         //      System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+        AutoCompleteDecorator.decorate(this.jComboCat);
+        AutoCompleteDecorator.decorate(this.jComboTempo);
+        AutoCompleteDecorator.decorate(this.jComboNumero);
+        AutoCompleteDecorator.decorate(this.jComboPeriodo);
 
     }
 
@@ -91,23 +96,22 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jRadioDespesa.setSelected(true);
 
-       carregaLancamentos();
-       
+        carregaLancamentos();
 
     }
 
     public void carregaLancamentos() {
         despesas = drc.pegaDespesa();
         receitas = drc.pegaReceita();
-        
+
         String[] colunas = new String[]{"Valor", "Data", "Categoria", "Pago", "Descrição"};
 
         DefaultTableModel tablemodel = new DefaultTableModel(null, colunas);
 
-        String[] linha=new String[]{"","","",""};
+        String[] linha = new String[]{"", "", "", ""};
 
         for (DespesaBEAN c : despesas) {
-            
+
             String pago;
 
             if (c.getDesPago() == true) {
@@ -115,14 +119,14 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 pago = "Não";
             }
-           
-            double valor=drc.getValor(c.getDesCod(),DESPESA);
+
+            double valor = drc.getValor(c.getDesCod(), DESPESA);
             linha = new String[]{
-                valor+"",
-                drc.getData(c.getDesCod(), DESPESA)+"", 
-                drc.getCat(c.getDes_catCod())+"",
-                pago+"", 
-                c.getDesDesc()+""
+                valor + "",
+                drc.getData(c.getDesCod(), DESPESA) + "",
+                drc.getCat(c.getDes_catCod()) + "",
+                pago + "",
+                c.getDesDesc() + ""
             };
             tablemodel.addRow(linha);
         }
@@ -140,15 +144,15 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 pago = "Não";
             }
-            
+
             linha = new String[]{String.valueOf(drc.getValor(r.getRecCod(), RECEITA)),
-                drc.getData(r.getRecCod(), RECEITA), 
-                drc.getCat(r.getRec_catCod()), 
+                drc.getData(r.getRecCod(), RECEITA),
+                drc.getCat(r.getRec_catCod()),
                 pago,
                 r.getRecDesc()};
             tablemodel.addRow(linha);
         }
-      
+
         jtReceita.setModel(tablemodel);
 
     }
@@ -192,7 +196,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
     public void botaoExcluir() {
         int cod;
-        
+
         if (index >= 0) {
             System.out.println(index);
             if (DRATT == DESPESA) {
@@ -200,13 +204,13 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 cod = receitas.get(index).getRecCod();
             }
-        
+
             drc.deleta(cod, DRATT);
             index = -10;
         } else {
             JOptionPane.showMessageDialog(null, "Você não selecionou um lançamento", "Notificação", WIDTH);
         }
-        
+
     }
 
     public void botaoAtualizar() {
@@ -297,21 +301,18 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
                 }
 
-            } else {
-                if (jRadioDespesa.isSelected()) {
+            } else if (jRadioDespesa.isSelected()) {
 
-                    drc.adicionaDespesa(DESCRICAO, PAGO, 1, false);
-                    drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, DESPESA, TIPO_AVISTA);
+                drc.adicionaDespesa(DESCRICAO, PAGO, 1, false);
+                drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, DESPESA, TIPO_AVISTA);
 
-                } else if (jRadioReceita.isSelected()) {
-                    drc.adicionaReceita(DESCRICAO, PAGO, 1, false);
-                    drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, RECEITA, TIPO_AVISTA);
-
-                }
+            } else if (jRadioReceita.isSelected()) {
+                drc.adicionaReceita(DESCRICAO, PAGO, 1, false);
+                drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, RECEITA, TIPO_AVISTA);
 
             }
         }
-     
+
     }
 
     /**
@@ -454,7 +455,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Número de parcelas:");
 
-        jComboNumero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        jComboNumero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
 
         jComboTempo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dias", "semanas", "meses", "bimestres", "trimestres", "semestres", "anos" }));
 
@@ -771,7 +772,6 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
         //   BotaoInserir();
         botaoInserir();
         carregaLancamentos();
-        
 
 
     }//GEN-LAST:event_jButtonInserirActionPerformed

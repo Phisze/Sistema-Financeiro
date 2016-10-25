@@ -46,11 +46,11 @@ public class RelatorioCONTROLE {
             
           
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Administrador\\Documents\\NetBeansProjects\\SFRelatThomas\\SFfinal\\relatorios\\ReTRec.jrxml");;
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\ReTRec.jrxml");;
 
             if (tipo == DESPESA) {
 
-                report = JasperCompileManager.compileReport("C:\\Users\\Administrador\\Documents\\NetBeansProjects\\SFRelatThomas\\SFfinal\\relatorios\\ReTDes.jrxml");
+                report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\ReTDes.jrxml");
 
             }
 
@@ -107,7 +107,7 @@ public class RelatorioCONTROLE {
 
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Administrador\\gitin\\SFfinal\\relatorios\\contasR.jrxml");
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\contasR.jrxml");
             JasperPrint impressao = JasperFillManager.fillReport(report, new HashMap(), jrRS);
 
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");
@@ -139,7 +139,7 @@ public class RelatorioCONTROLE {
 
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
 
-            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Administrador\\gitin\\SFfinal\\relatorios\\contasP.jrxml");
+            JasperReport report = JasperCompileManager.compileReport("C:\\Users\\Weverton\\Desktop\\Sistema Financeiro\\SFfinal\\relatorios\\contasP.jrxml");
             JasperPrint impressao = JasperFillManager.fillReport(report, new HashMap(), jrRS);
 
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");

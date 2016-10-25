@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2016-10-24T19:03:27 -->
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-10-24T23:30:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReT" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba3fef1e-af0e-4636-94db-04a8d99e8d4c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EmpresaAdapter"/>
@@ -68,10 +68,6 @@
 					</textElement>
 					<text><![CDATA[Relatório de Despesas]]></text>
 				</staticText>
-				<image>
-					<reportElement x="474" y="5" width="100" height="87" uuid="c86b95ce-d408-4ed4-b3a5-94c6cd1bc61b"/>
-					<imageExpression><![CDATA["C:/Users/Administrador/Documents/NetBeansProjects/SFRelatThomas/SFfinal/src/logo.png"]]></imageExpression>
-				</image>
 				<textField>
 					<reportElement x="30" y="60" width="420" height="19" forecolor="#FFFFFF" uuid="86f20ff6-84bd-4926-8aed-50e66d43087f"/>
 					<textElement>
@@ -79,6 +75,10 @@
 					</textElement>
 					<textFieldExpression><![CDATA["Não pagas. De: "+DATEFORMAT($P{dataum},"dd MMMMM yyyy")+" a "+DATEFORMAT($P{datadois},"dd MMMMM yyyy")]]></textFieldExpression>
 				</textField>
+				<image>
+					<reportElement x="480" y="10" width="110" height="74" uuid="795f2438-ca40-4aaf-92c6-2f6b19dbeb13"/>
+					<imageExpression><![CDATA["C:/Users/Weverton/Desktop/SFfinal/src/logo.png"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
@@ -149,7 +149,7 @@
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="ed43c8e7-bd85-413b-9d3c-125d714e05c0"/>
+				<reportElement x="0" y="4" width="313" height="13" uuid="ed43c8e7-bd85-413b-9d3c-125d714e05c0"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
