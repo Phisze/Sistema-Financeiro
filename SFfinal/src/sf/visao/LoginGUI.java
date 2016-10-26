@@ -165,13 +165,13 @@ public class LoginGUI extends javax.swing.JFrame {
         String usuario=jTextFieldUsu.getText().toString();
         String senha=jPasswordField1.getText().toString();
         
-        String saida = "Entrada: " + senha + "\nSenha com MD5:"
-+ Criptografia.criptografar(senha);
-System.out.println("Resultado: \n"+saida);
+       // String saida = "Entrada: " + senha + "\nSenha com MD5:"
+//+ Criptografia.criptografar(senha);
+//System.out.println("Resultado: \n"+saida);
 
         
         UsuarioCONTROLE uc=new UsuarioCONTROLE();
-        int resp=uc.logar(usuario, senha);
+        int resp=uc.logar(usuario,  Criptografia.criptografar(senha));
         
         if(resp==1){
             PrincipalGUI p = new PrincipalGUI();
