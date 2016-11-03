@@ -5,30 +5,18 @@
  */
 package sf.visao;
 
-import java.awt.Font;
 import java.util.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.text.MaskFormatter;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import sf.controle.DespesasReceitasCONTROLE;
 import sf.controle.GerenciarCategoriaCONTROLE;
 import sf.modelo.CategoriaBEAN;
-import sf.modelo.CategoriaDAO;
 import sf.modelo.DespesaBEAN;
-import sf.modelo.ParcelaBEAN;
-import sf.modelo.ParcelaDAO;
 import sf.modelo.ReceitaBEAN;
-import sf.modelo.ReceitaDespesaDAO;
 
 /**
  *

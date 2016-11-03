@@ -5,7 +5,6 @@
  */
 package sf.visao;
 
-import sf.visao.LoginGUI;
 import javax.swing.JOptionPane;
 import sf.controle.UsuarioCONTROLE;
 
@@ -167,14 +166,20 @@ public class CadastrarGUI extends javax.swing.JFrame {
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
         // TODO add your handling code here:
-        String usu=jTextFieldUsu.getText().toString();
+        UsuarioCONTROLE usuc = new UsuarioCONTROLE();
+        String usu = jTextFieldUsu.getText().toString();
         String senha1 = jPasswordField1.getText().toString();
         String senha2 = jPasswordField2.getText().toString();
-        UsuarioCONTROLE uc=new UsuarioCONTROLE();
-        this.mensagem(uc.cadastraUsuario(usu, senha1, senha2));
-        PrincipalGUI p = new PrincipalGUI();
-        p.setVisible(true);
-
+        for (int i = 0; i <= usuc.pegaUsu().getUsuarios().size(); i++) {
+            if (usuc.pegaUsu().getUsuarios().get(i).getUsuario().equals(usu)) {
+                JOptionPane.showMessageDialog(null, "Nome já usado");
+                break;
+            } else {
+                UsuarioCONTROLE uc = new UsuarioCONTROLE();
+                this.mensagem(uc.cadastraUsuario(usu, senha1, senha2));
+                break;
+            }
+        }
     }//GEN-LAST:event_jButtonEntrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -227,7 +232,7 @@ public class CadastrarGUI extends javax.swing.JFrame {
             jTextFieldUsu.setText(" ");
         } else if (resp == -1) {
             JOptionPane.showMessageDialog(null, "Operação não pôde ser realizada com sucesso!");
-      }
+        }
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -14,6 +14,11 @@ import static sf.modelo.Criptografia.criptografar;
  */
 public class UsuarioCONTROLE {
 
+   public UsuarioDAO pegaUsu(){
+      UsuarioDAO usu = new UsuarioDAO();
+      return usu;
+   }
+    
     public int cadastraUsuario(String usuario, String senha1, String senha2) {
         int resp = 0;
 

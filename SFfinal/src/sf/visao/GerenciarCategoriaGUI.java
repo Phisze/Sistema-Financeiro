@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -42,7 +43,7 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
 
     public void meuInit() {
 
-      //  panelCat.setVisible(false);
+        //  panelCat.setVisible(false);
         setCategoria();
         preencheTable();
 
@@ -76,21 +77,21 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
         int[] localselecionado = {jTableCat.getSelectedRow(), jTableCat.getSelectedColumn()};
 
         if (localselecionado[1] == 0) {
-            
-            categoriaIndex=jTableCat.getSelectedRow();
+
+            categoriaIndex = jTableCat.getSelectedRow();
             String nomeatual = String.valueOf(jTableCat.getModel().getValueAt(localselecionado[0], localselecionado[1]));
             jtNome.setText(nomeatual);
             nomeAntigo = nomeatual;
             gcc.getCatCodigo(localselecionado[0]);
         }
-      }
-    
+    }
+
     public void setCategoria() {
-       // jComboCat.removeAllItems();
+        // jComboCat.removeAllItems();
         ArrayList<CategoriaBEAN> cb = new ArrayList();
         gcc.pegaCat(cb);
         //for (CategoriaBEAN c : cb) {
-          //  jComboCat.addItem(c.getCatNome());
+        //  jComboCat.addItem(c.getCatNome());
 
         //}
     }
@@ -103,11 +104,10 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
                 catDesc = jtaDesc.getText();
             }
 
-          //  if (jRadioSub.isSelected()) {
+            //  if (jRadioSub.isSelected()) {
             //    gcc.getCatCodigo(jComboCat.getSelectedIndex());
-
             //} else {
-                gcc.inserirCategoria(catNome, catDesc);
+            gcc.inserirCategoria(catNome, catDesc);
             //}
 
         }
@@ -342,30 +342,72 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ArrayList<CategoriaBEAN> cb = gcc.pegaCat();
         gcc = new GerenciarCategoriaCONTROLE();
-        
-        gcc.deletaCategoria(categoriaIndex);
-        
-        
-        DefaultTableModel model = (DefaultTableModel) jTableCat.getModel();
-        
-  //          CategoriaBEAN cat = new CategoriaBEAN();
-    //        cat.setCatNome(jtNome.getText());
+        int confirma = JOptionPane.showConfirmDialog(null, "Voce tem certeza que quer deletar essa categoria (Ela irá deletar todos as suas contas que estão refeciadas a ela)?", "Deleção", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            for (int i = 0; i <= gcc.deletaD().getDespesa().size(); i++) {
+                System.out.println("Chego");
+                System.out.println(categoriaIndex);
+                if (gcc.deletaD().getDespesa().isEmpty() && gcc.deletaD().getReceita().isEmpty()) {
+                    gcc.deletaCategoria(categoriaIndex);
+                    System.out.println("Chego 4");
+                    //     gcc.verificaDeletado().deletaDespesa(categoriaIndex);
+                    System.out.println("Chego 5");
+                    DefaultTableModel model = (DefaultTableModel) jTableCat.getModel();
+                    //          CategoriaBEAN cat = new CategoriaBEAN();
+                    //        cat.setCatNome(jtNome.getText());
+                    //     gcc.deletaCategoria(buscaCodUsandoNome());
+                    model.removeRow(jTableCat.getSelectedRow());
+                } else if (gcc.deletaD().getDespesa().size() > 1 && gcc.deletaD().getReceita().size() > 1 && gcc.deletaD().getDespesa().get(i).getDes_catCod() != cb.get(categoriaIndex).getCatCod() || gcc.deletaD().getReceita().get(i).getRec_catCod() != cb.get(categoriaIndex).getCatCod()) {
+                    gcc.deletaCategoria(categoriaIndex);
+                    System.out.println("Chego 4");
+                    //     gcc.verificaDeletado().deletaDespesa(categoriaIndex);
+                    System.out.println("Chego 5");
+                    DefaultTableModel model = (DefaultTableModel) jTableCat.getModel();
+                    //          CategoriaBEAN cat = new CategoriaBEAN();
+                    //        cat.setCatNome(jtNome.getText());
+                    //     gcc.deletaCategoria(buscaCodUsandoNome());
+                    model.removeRow(jTableCat.getSelectedRow());
+                } else if (gcc.deletaD().getDespesa().get(i).getDes_catCod() == cb.get(categoriaIndex).getCatCod() || gcc.deletaD().getReceita().get(i).getRec_catCod() == cb.get(categoriaIndex).getCatCod()) {
+                    System.out.println("Chego 1");
+                    gcc.deletaP().deletaParcelaDespesa(gcc.deletaD().getDespesa().get(i).getDesCod());
+                    gcc.deletaP().deletaParcelaReceita(gcc.deletaD().getReceita().get(i).getRecCod());
+                    System.out.println("Chego 2");
+                    gcc.deletaD().deletaDespesa(gcc.deletaD().getDespesa().get(i).getDesCod());
+                    System.out.println("Cat Index " + categoriaIndex);
+                    System.out.println("Chego 3");
 
-       //     gcc.deletaCategoria(buscaCodUsandoNome());
-           model.removeRow(jTableCat.getSelectedRow());
-        
+                    System.out.println("Chego 6");
+                    gcc.deletaD().deletaReceita(gcc.deletaD().getReceita().get(i).getRecCod());
+                    System.out.println("Chego 7");
+
+                    gcc.deletaCategoria(categoriaIndex);
+                    System.out.println("Chego 4");
+                    //     gcc.verificaDeletado().deletaDespesa(categoriaIndex);
+                    System.out.println("Chego 5");
+                    DefaultTableModel model = (DefaultTableModel) jTableCat.getModel();
+                    //          CategoriaBEAN cat = new CategoriaBEAN();
+                    //        cat.setCatNome(jtNome.getText());
+                    //     gcc.deletaCategoria(buscaCodUsandoNome());
+                    model.removeRow(jTableCat.getSelectedRow());
+                }
+            }
+        } else {
+
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private int buscaCodUsandoNome() {
 
         ArrayList<CategoriaBEAN> cb = gcc.pegaCat();
         int codigo = 0;
-        
+
         for (CategoriaBEAN categoriaBEAN : cb) {
             if (categoriaBEAN.getCatNome().equals(nomeAntigo) == true) {
                 codigo = categoriaBEAN.getCatCod();
-                
+
                 break;
             }
         }

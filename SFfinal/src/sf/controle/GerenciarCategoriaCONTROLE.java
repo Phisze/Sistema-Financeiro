@@ -9,8 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import sf.modelo.CategoriaBEAN;
-import sf.modelo.CategoriaDAO;
+import sf.modelo.*;
 import sf.modelo.ConnectionFactory;
 
 /**
@@ -24,6 +23,17 @@ public class GerenciarCategoriaCONTROLE {
     private int catcod;
     //   private int categoriaSelecionada;
 
+    public ReceitaDespesaDAO deletaD() {
+        ReceitaDespesaDAO dd = new ReceitaDespesaDAO();
+        return dd;
+    }
+
+    public ParcelaDAO deletaP() {
+        ParcelaDAO pd = new ParcelaDAO();
+        return pd;
+    }
+     
+
     public ArrayList<CategoriaBEAN> retornaCategorias() {
         cdao = new CategoriaDAO();
         ArrayList<CategoriaBEAN> categorias = new ArrayList<>();
@@ -34,10 +44,10 @@ public class GerenciarCategoriaCONTROLE {
 
     public int selecionaCategoria(int index) {
 
-        cdao=new CategoriaDAO();
-        ArrayList<CategoriaBEAN> cb=cdao.pegaCat();
+        cdao = new CategoriaDAO();
+        ArrayList<CategoriaBEAN> cb = cdao.pegaCat();
         return cb.get(index).getCatCod();
-   
+
     }
 
     public void getCatCodigo(int index) {
@@ -46,10 +56,15 @@ public class GerenciarCategoriaCONTROLE {
         catcod = cate.get(index).getCatCod();
     }
 
-    public void deletaCategoria(int index) {
-       int CODIGO = selecionaCategoria(index);
+    public ReceitaDespesaDAO verificaDeletado() {
+        ReceitaDespesaDAO dr = new ReceitaDespesaDAO();
+        return dr;
+    }
 
-       cdao.deleta(CODIGO);
+    public void deletaCategoria(int index) {
+        int CODIGO = selecionaCategoria(index);
+
+        cdao.deleta(CODIGO);
 
     }
 

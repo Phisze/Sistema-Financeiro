@@ -83,7 +83,7 @@ public class ReceitaDespesaDAO {
 
     public void deletaDespesa(int codigo) {
         String sql = "delete from despesa where desCod=?;";
-
+        
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
 
