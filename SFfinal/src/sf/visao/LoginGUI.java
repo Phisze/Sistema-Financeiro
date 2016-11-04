@@ -231,7 +231,7 @@ public class LoginGUI extends javax.swing.JFrame {
             jPasswordField1.setText(" ");
             jTextFieldUsu.setText(" ");
         } else if (resp == 0) {
-            JOptionPane.showMessageDialog(null, "Operação não pôde ser realizada com sucesso!");
+            JOptionPane.showMessageDialog(null, "Operação não pôde ser realizada com sucesso! \n Nome ou Senha Inválidos.");
       }
 
     }
