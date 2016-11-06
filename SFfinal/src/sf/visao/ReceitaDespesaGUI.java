@@ -758,9 +758,11 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         // TODO add your handling code here:
         //   BotaoInserir();
-        botaoInserir();
-        carregaLancamentos();
-
+         botaoInserir();
+         carregaLancamentos();
+       
+         
+         
 
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
