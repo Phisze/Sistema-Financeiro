@@ -120,7 +120,7 @@ public class RelatorioCONTROLE {
 
         try {
             SimpleDateFormat dt = new SimpleDateFormat("dd-mm-yyyy");
-            File arquivo = new File("Contas a Receber" + dt.format(Calendar.getInstance().getTime()) + ".pdf");
+            File arquivo = new File("Contas a receber" + dt.format(Calendar.getInstance().getTime()) + ".pdf");
             Desktop.getDesktop().open(arquivo);
         } catch (Exception e) {
             e.printStackTrace();
