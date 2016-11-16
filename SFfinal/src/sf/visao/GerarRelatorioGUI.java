@@ -5,16 +5,21 @@
  */
 package sf.visao;
 
-import sf.controle.GeraRelatorioCategoria;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import sf.controle.GeraRelatorioCategoriaCONTROLE;
+import sf.controle.GeraRelatorioContaAtrasoCONTROLE;
+import sf.controle.RelatorioCONTROLE;
 
 /**
  *
  * @author Alunos
  */
 public class GerarRelatorioGUI extends javax.swing.JFrame {
-    
-    
-    
+
+    private boolean DESPESA = true;
+    private boolean RECEITA = false;
 
     /**
      * Creates new form GR
@@ -23,31 +28,56 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
         initComponents();
     }
 
-    
-    public void meuInit(){
-    
-    
+    public void meuInit() {
+
     }
-    
-    public void gerarRelat(){
-        
-        
-        
-        
-    
-    
+
+    public void gerarRelat() {
+
     }
-    
-    public void catSelecionada(){
-        if(jCheckCat.isSelected() && !jCheckDes.isSelected() && !jCheckRec.isSelected()){
-            
-            
-        
+
+    public void catSelecionada() {
+        if (checkCat.isSelected() && !jCheckDes.isSelected() && !jCheckRec.isSelected()) {
+
         }
     }
-           
-            
-    
+
+    //gerarRelatorioT (Thomas) é o método do meu tipo de relatório, é bom criar um método para cada um de nós
+    //Assim, o algoritmo fica menos sucetível a erros e é mais fácil de consertar se der problema em algum tipo de relatório.
+    public void geraRelatorioT(boolean tipo) {
+
+        RelatorioCONTROLE rec = new RelatorioCONTROLE();
+        String sql = "";
+        //Verifica o tipo do relatório e manipula a string para fazer a consulta correta.
+        if (tipo == DESPESA) {
+            sql = "select parData,parValor,desDesc from despesa join parcela where par_desCod=desCod and parData>? and parData<?;";
+        } else if (tipo == RECEITA) {
+            sql = "select parData,parValor,recDesc from receita join parcela where par_recCod=recCod and parData>? and parData<?;";
+        }
+
+        //Pega as datas iniciais e finais dos campos de data e os converte em date.
+        String datau = jDataRecIni.getText();
+        String datad = jDataRecFim.getText();
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        GregorianCalendar gc = new GregorianCalendar();
+
+        try {
+            java.util.Date d1 = formatter.parse(datau);
+            java.util.Date d2 = formatter.parse(datad);
+
+            java.sql.Date paraum = new java.sql.Date(d1.getTime());
+
+            java.sql.Date paradois = new java.sql.Date(d2.getTime());
+
+            //Passa-se os parâmetros necessários para gerar o relatório
+            rec.geraRelatorioT(sql, paraum, paradois, tipo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,31 +100,32 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jDataDesIni = new javax.swing.JFormattedTextField();
         jDataDesFim = new javax.swing.JFormattedTextField();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jCatNome = new javax.swing.JTextField();
-        jCheckCat = new javax.swing.JCheckBox();
+        checkCat = new javax.swing.JCheckBox();
         jCheckDes = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        checkContasR = new javax.swing.JCheckBox();
+        checkContasP = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        contasP = new javax.swing.JFormattedTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        contasR = new javax.swing.JFormattedTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jDataRecIni2 = new javax.swing.JFormattedTextField();
+        checkContasA = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Selecione o tipo de relatório: ", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 102, 255))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Selecione o tipo de relatório: ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 102, 255))); // NOI18N
 
         jCheckRec.setText("Receita");
-        jCheckRec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckRecActionPerformed(evt);
-            }
-        });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel3.setText("Data inicial");
 
@@ -133,7 +164,7 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE))
                     .addComponent(jDataRecFim)
                     .addComponent(jDataRecIni))
                 .addContainerGap())
@@ -152,7 +183,7 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel6.setText("Data inicial");
 
@@ -210,47 +241,132 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        checkCat.setText("Categoria");
 
-        jLabel10.setText("Nome da categoria:");
+        jCheckDes.setText("Despesa");
 
-        jCatNome.addActionListener(new java.awt.event.ActionListener() {
+        checkContasR.setText("Contas a receber");
+
+        checkContasP.setText("Contas a pagar");
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel5.setText("Data inicial");
+
+        try {
+            contasP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        contasP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCatNomejTextField1ActionPerformed(evt);
+                contasPActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCatNome))
-                .addGap(0, 2, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addComponent(contasP))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCatNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contasP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        jCheckCat.setText("Categoria");
-        jCheckCat.addActionListener(new java.awt.event.ActionListener() {
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel8.setText("Data inicial");
+
+        try {
+            contasR.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        contasR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckCatActionPerformed(evt);
+                contasRActionPerformed(evt);
             }
         });
 
-        jCheckDes.setText("Despesa");
-        jCheckDes.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 25, Short.MAX_VALUE))
+                    .addComponent(contasR))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contasR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel7.setText("Data inicial");
+
+        try {
+            jDataRecIni2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jDataRecIni2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckDesActionPerformed(evt);
+                jDataRecIni2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 29, Short.MAX_VALUE))
+                    .addComponent(jDataRecIni2))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDataRecIni2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
+        checkContasA.setText("Contas atrasadas");
+        checkContasA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkContasAActionPerformed(evt);
             }
         });
 
@@ -258,48 +374,68 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(checkContasP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addComponent(jCheckRec, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(checkContasR)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkContasA))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jCheckRec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jCheckDes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCheckCat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(104, 104, 104))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(4, 4, 4)
+                        .addComponent(checkCat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addGap(323, 323, 323))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jCheckDes)
-                            .addComponent(jCheckRec))
+                            .addComponent(checkCat))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jCheckRec)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(checkContasP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(checkContasR)
+                            .addComponent(checkContasA))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jCheckCat, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(52, 52, 52))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -314,6 +450,11 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Cancelar.png"))); // NOI18N
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -322,9 +463,9 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,98 +477,133 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Relatorio", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 102, 255))); // NOI18N
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jDataRecIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataRecIniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jDataRecIniActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    private void jDataRecFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataRecFimActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jDataRecFimActionPerformed
+        if (!jDataRecIni.getText().startsWith(" ") && !jDataRecFim.getText().startsWith(" ")) {
+            if (jCheckRec.isSelected()) {
+                geraRelatorioT(RECEITA);
 
-    private void jDataDesIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataDesIniActionPerformed
+            } else if (jCheckDes.isSelected()) {
+                geraRelatorioT(DESPESA);
+            }
+
+        }
+
+        if (checkCat.isSelected()) {
+            String query = "SELECT * FROM categoria;";
+            try {
+                //passa o caminho onde o relatório esta no projeto - codigo compilado
+                GeraRelatorioCategoriaCONTROLE.geraRelatorioCategoria(query, "./rel/Categoria2.jasper");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (checkContasA.isSelected()) {
+            String query = "SELECT desDesc, parData, parValor FROM empresa.despesa join empresa.parcela where par_desCod=desCod and\n"
+                    + "parParcelaPaga=0 and parData<? group by parData;";
+            try {
+                //passa o caminho onde o relatório esta no projeto - codigo compilado
+                java.sql.Date datatual = new java.sql.Date(new java.util.Date(System.currentTimeMillis()).getTime());
+                GeraRelatorioContaAtrasoCONTROLE.geraRelatorioContasAtraso(datatual, query, "./rel/ContasemAtraso.jasper");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (checkContasP.isSelected()) {
+            RelatorioCONTROLE rec = new RelatorioCONTROLE();
+            String sql = "select parData,parValor,desDesc from despesa join parcela where par_desCod=desCod and parData>? group by parData;";
+            String data = contasP.getText().toString();
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                java.util.Date d1 = formatter.parse(data);
+                java.sql.Date paraum = new java.sql.Date(d1.getTime());
+                rec.geraRelatorioP(sql, paraum);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (checkContasR.isSelected()) {
+            RelatorioCONTROLE recr = new RelatorioCONTROLE();
+            String sqlr = "select parData,parValor,recDesc from receita join parcela where par_recCod=recCod and parData>? group by parData;";
+            String datar = contasR.getText().toString();
+            DateFormat formatterr = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                java.util.Date d1 = formatterr.parse(datar);
+                java.sql.Date paraum = new java.sql.Date(d1.getTime());
+                recr.geraRelatorioR(sqlr, paraum);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void checkContasAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkContasAActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jDataDesIniActionPerformed
+    }//GEN-LAST:event_checkContasAActionPerformed
+
+    private void jDataRecIni2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataRecIni2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDataRecIni2ActionPerformed
+
+    private void contasRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contasRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contasRActionPerformed
+
+    private void contasPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contasPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contasPActionPerformed
 
     private void jDataDesFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataDesFimActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jDataDesFimActionPerformed
 
-    private void jCatNomejTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCatNomejTextField1ActionPerformed
+    private void jDataDesIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataDesIniActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCatNomejTextField1ActionPerformed
+    }//GEN-LAST:event_jDataDesIniActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jDataRecFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataRecFimActionPerformed
         // TODO add your handling code here:
-        String query = "SELECT * FROM categoria;";
-       try{ 
-           //passa o caminho onde o relatório esta no projeto - codigo compilado
-        GeraRelatorioCategoria.gerarRelatorio(query, "./rel/Categoria2.jasper");
-       }catch(Exception x){}
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jDataRecFimActionPerformed
 
-    private void jCheckRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRecActionPerformed
+    private void jDataRecIniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDataRecIniActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckRecActionPerformed
+    }//GEN-LAST:event_jDataRecIniActionPerformed
 
-    private void jCheckDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckDesActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckDesActionPerformed
-
-    private void jCheckCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckCatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckCatActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -456,6 +632,12 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -467,29 +649,35 @@ public class GerarRelatorioGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox checkCat;
+    private javax.swing.JCheckBox checkContasA;
+    private javax.swing.JCheckBox checkContasP;
+    private javax.swing.JCheckBox checkContasR;
+    private javax.swing.JFormattedTextField contasP;
+    private javax.swing.JFormattedTextField contasR;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JTextField jCatNome;
-    private javax.swing.JCheckBox jCheckCat;
     private javax.swing.JCheckBox jCheckDes;
     private javax.swing.JCheckBox jCheckRec;
     private javax.swing.JFormattedTextField jDataDesFim;
     private javax.swing.JFormattedTextField jDataDesIni;
     private javax.swing.JFormattedTextField jDataRecFim;
     private javax.swing.JFormattedTextField jDataRecIni;
+    private javax.swing.JFormattedTextField jDataRecIni2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

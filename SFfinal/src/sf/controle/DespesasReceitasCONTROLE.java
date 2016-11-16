@@ -56,67 +56,60 @@ public class DespesasReceitasCONTROLE {
         cdao = new CategoriaDAO();
 
     }
-    
 
-    
-    public double getValor(int LANCAMENTOCOD, boolean tipo){
-        ParcelaDAO pd=new ParcelaDAO();
-        
+    public double getValor(int LANCAMENTOCOD, boolean tipo) {
+        ParcelaDAO pd = new ParcelaDAO();
+
         ArrayList<ParcelaBEAN> pb;
-        
-        pb=pd.getParcela(LANCAMENTOCOD, tipo);
+
+        pb = pd.getParcela(LANCAMENTOCOD, tipo);
         pb.add(new ParcelaBEAN());
-       
-       
-        double valor =(double) pb.get(0).getParValor();
-        
-        System.out.println("Teste: "+valor);
-        
-        
-        
+
+        double valor = (double) pb.get(0).getParValor();
+
+        System.out.println("Teste: " + valor);
+
         return valor;
-        
+
     }
-    
-    public String getData(int LANCAMENTOCOD, boolean tipo){
-        
-        ParcelaDAO pd= new ParcelaDAO();
-        
-        ArrayList<ParcelaBEAN> pb= new ArrayList<ParcelaBEAN>();
-        
-        pb=pd.getParcela(LANCAMENTOCOD, tipo);
-       
+
+    public String getData(int LANCAMENTOCOD, boolean tipo) {
+
+        ParcelaDAO pd = new ParcelaDAO();
+
+        ArrayList<ParcelaBEAN> pb = new ArrayList<ParcelaBEAN>();
+
+        pb = pd.getParcela(LANCAMENTOCOD, tipo);
+
         pb.add(new ParcelaBEAN());
-        
-        GregorianCalendar gc= new GregorianCalendar();
-        
+
+        GregorianCalendar gc = new GregorianCalendar();
+
         gc.setTime(pb.get(0).getParData());
-        
+
         String datafinal = new SimpleDateFormat("dd/MM/yyyy").format(gc.getTimeInMillis());
-      
+
         return datafinal;
-        
-        
-    
+
     }
-    
-    public String getCat(int CODCATEGORIA){
-        
-        String categoria="nulo";
-        
-        ArrayList<CategoriaBEAN> cb= new ArrayList<CategoriaBEAN>();
-        
-        cb=retornaCategoria();
-        
-        for(CategoriaBEAN c: cb){
-            if(c.getCatCod()==CODCATEGORIA){
-            categoria=c.getCatNome();
+
+    public String getCat(int CODCATEGORIA) {
+
+        String categoria = "nulo";
+
+        ArrayList<CategoriaBEAN> cb = new ArrayList<CategoriaBEAN>();
+
+        cb = retornaCategoria();
+
+        for (CategoriaBEAN c : cb) {
+            if (c.getCatCod() == CODCATEGORIA) {
+                categoria = c.getCatNome();
             }
-        
+
         }
-    
-        return categoria;       
-    
+
+        return categoria;
+
     }
 
     public ArrayList<CategoriaBEAN> retornaCategoria() {
@@ -150,8 +143,8 @@ public class DespesasReceitasCONTROLE {
 
         return codRDacicionado = cod.get(cod.size() - 1).getDesCod();
 
-    }    
-    
+    }
+
     public void adicionaReceita(String desc, boolean recPago, int recNrodeParcelas, boolean recFixo) {
         ReceitaDespesaDAO rdd = new ReceitaDespesaDAO();
         ReceitaBEAN rb = new ReceitaBEAN();
@@ -169,23 +162,21 @@ public class DespesasReceitasCONTROLE {
         codRDacicionado = cod.get(cod.size() - 1).getRecCod();
     }
 
-    public ArrayList<ReceitaBEAN> pegaReceita(){
-        
-        ReceitaDespesaDAO rdd=new ReceitaDespesaDAO();
-        
+    public ArrayList<ReceitaBEAN> pegaReceita() {
+
+        ReceitaDespesaDAO rdd = new ReceitaDespesaDAO();
+
         return rdd.getReceita();
-        
+
     }
-    
-    public ArrayList<DespesaBEAN> pegaDespesa(){
-        
-        ReceitaDespesaDAO rdd=new ReceitaDespesaDAO();
-        
-        return rdd.getDespesa();    
-    
+
+    public ArrayList<DespesaBEAN> pegaDespesa() {
+
+        ReceitaDespesaDAO rdd = new ReceitaDespesaDAO();
+
+        return rdd.getDespesa();
+
     }
-    
-    
 
     public void add(ParcelaBEAN pb, boolean receitaoudespesa) {
         ParcelaDAO pd = new ParcelaDAO();
@@ -205,11 +196,12 @@ public class DespesasReceitasCONTROLE {
     }
 
     public void adicionaParcela(double valor, java.util.Date data, boolean parParcelaPaga, int nroParcela, int periodo, boolean receitaoudespesa, int tipo) {
+
         ParcelaDAO pd = new ParcelaDAO();
         ParcelaBEAN pb = new ParcelaBEAN();
         pb.setParParcelaPaga(parParcelaPaga);
         pb.setParValor(valor);
-      //  pb.setParData(data);
+        //  pb.setParData(data);
 
         if (tipo == AVISTA) {
             GregorianCalendar gc = new GregorianCalendar();
@@ -217,102 +209,260 @@ public class DespesasReceitasCONTROLE {
             pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
             add(pb, receitaoudespesa);
 
-        }else if(tipo == PARCELADO){
-        
+        } else if (tipo == PARCELADO) {
+
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(data);
-            
-            for(int i=0; i<nroParcela; i++){
-                if(periodo==DIARIO){
-                    
-                   
+
+            for (int i = 0; i < nroParcela; i++) {
+                if (periodo == DIARIO) {
+
+                    //Adiciona a primeira parcela
                     pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
-                    add(pb,receitaoudespesa);
-                    
-                    if(gc.get(Calendar.DAY_OF_MONTH)==gc.getActualMaximum(Calendar.DAY_OF_MONTH)){
-                    
-                        if(gc.get(Calendar.MONTH)==gc.getMaximum(Calendar.MONTH)){
-                        
+                    add(pb, receitaoudespesa);
+
+                    //Verifica se a parcela adicionada era do último dia do mês
+                    if (gc.get(Calendar.DAY_OF_MONTH) == gc.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+
+                        //Verifica se o mês da parcela adicionada era do o último do ano
+                        if (gc.get(Calendar.MONTH) == gc.getMaximum(Calendar.MONTH)) {
+
+                            //Se é o último mês do ano, adiciona mais um ano ao mês começando do mês de Janeiro
                             gc.add(Calendar.YEAR, 1);
                             gc.add(Calendar.MONTH, Calendar.JANUARY);
-                        
+
                         }
-                        
+                        //Se é o último dia do mês, passa pro próximo mês, comeãndo no dia 01
                         gc.roll(GregorianCalendar.MONTH, 1);
-                        gc.set(Calendar.DAY_OF_MONTH,1);
-                    }else{
-                        
+                        gc.set(Calendar.DAY_OF_MONTH, 1);
+                    } else {
+                        //Se não é o último dia do mês, só adiciona um dia para a próx parcela
                         gc.roll(GregorianCalendar.DAY_OF_MONTH, 1);
-                    
                     }
-                    
-                    
-                }
+
+                    //faz o processo novamente
+                } else if (periodo == SEMANAL) {
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    if (gc.get(GregorianCalendar.WEEK_OF_MONTH) == gc.getActualMaximum(GregorianCalendar.WEEK_OF_MONTH)) {
+
+                        if (gc.get(GregorianCalendar.MONTH) == gc.getActualMaximum(GregorianCalendar.MONTH)) {
+
+                            gc.add(GregorianCalendar.YEAR, 1);
+                            gc.set(GregorianCalendar.MONTH, GregorianCalendar.DECEMBER);
+
+                        }
+                        gc.add(GregorianCalendar.MONTH, 1);
+                    } else {
+                        gc.add(GregorianCalendar.WEEK_OF_MONTH, 1);
+                    }
+                } else if (periodo == MENSAL) {
+
+                    int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 1);
+
+                    //Se o dia do mês da parcela for menorou igual que a quantidade máxima de dias (28,29,30,31) num mês
+                    //Seta o dia do mês na data.
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+
+                    }
+
+                } else if (periodo == BIMESTRAL) {
+
+                    int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 2);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                } else if (periodo == TRIMESTRAL) {
+
+                    int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 3);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                }else if (periodo == SEMESTRAL) {
+
+                int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
                 
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 6);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                
+
+            }else if (periodo == ANUAL) {
+
+             
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.YEAR, 1);
+                }
+
+            
+
             }
-           
-        
-        }      
-        else if (tipo == FIXO) {
+
+        } else if (tipo == FIXO) {
 
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(data);
 
             if (periodo == DIARIO) {
 
-                for (int i = 0; i < 7; i++) {
-                    
+                for (int i = 0; i <= 7; i++) {
+
                     pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
                     add(pb, receitaoudespesa);
-                    
+
                     if (gc.get(Calendar.DAY_OF_MONTH) == gc.getActualMaximum(Calendar.DAY_OF_MONTH)) {
-                        
+
                         if (gc.get(Calendar.MONTH) == gc.getMaximum(Calendar.MONTH)) {
-                        
+
                             gc.add(Calendar.YEAR, 1);
-                            gc.add(Calendar.MONTH, Calendar.JANUARY);
-                        
+                            gc.set(Calendar.MONTH, Calendar.JANUARY);
+
                         }
-                        
+
                         gc.roll(GregorianCalendar.MONTH, true);
                         gc.set(Calendar.DAY_OF_MONTH, 1);
 
                     } else {
 
                         gc.roll(GregorianCalendar.DAY_OF_MONTH, true);
-                        
+
                     }
-                    
-                      
-                      
 
                 }
 
             } else if (periodo == SEMANAL) {
 
-                for (int i = 1; i < 8; i++) {
-                    gc.roll(GregorianCalendar.WEEK_OF_MONTH, i);
+                for (int i = 1; i <= 7; i++) {
+
                     pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
                     add(pb, receitaoudespesa);
+
+                    if (gc.get(GregorianCalendar.WEEK_OF_MONTH) == gc.getActualMaximum(GregorianCalendar.WEEK_OF_MONTH)) {
+
+                        if (gc.get(GregorianCalendar.MONTH) == gc.getActualMaximum(GregorianCalendar.MONTH)) {
+
+                            gc.add(GregorianCalendar.YEAR, 1);
+                            gc.set(GregorianCalendar.MONTH, GregorianCalendar.DECEMBER);
+
+                        }
+                        gc.add(GregorianCalendar.MONTH, 1);
+                    } else {
+                        gc.add(GregorianCalendar.WEEK_OF_MONTH, 1);
+                    }
+
                 }
             } else if (periodo == MENSAL) {
+
+                //Pega o dia do mês que da parcela
+                int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                for (int i = 1; i <= 7; i++) {
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 1);
+
+                    //Se o dia do mês da parcela for menorou igual que a quantidade máxima de dias (28,29,30,31) num mês
+                    //Seta o dia do mês na data.
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+
+                    }
+                }
             } else if (periodo == BIMESTRAL) {
+
+                int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                for (int i = 1; i <= 7; i++) {
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 2);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                }
             } else if (periodo == TRIMESTRAL) {
+
+                int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                for (int i = 1; i <= 7; i++) {
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 3);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                }
+
             } else if (periodo == SEMESTRAL) {
+
+                int diames = gc.get(GregorianCalendar.DAY_OF_MONTH);
+
+                for (int i = 1; i <= 7; i++) {
+
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.MONTH, 6);
+
+                    if (diames <= gc.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)) {
+                        gc.set(GregorianCalendar.DAY_OF_MONTH, diames);
+                    }
+
+                }
+
             } else if (periodo == ANUAL) {
-            }
 
-        } else if (tipo == PARCELADO) {
+                for (int i = 1; i <= 7; i++) {
 
-        } else if (periodo == DIARIO) {
-            //1=diario
-            for (int i = 1; i < nroParcela; i++) {
-                GregorianCalendar gc = new GregorianCalendar();
-                gc.setTime(data);
-                gc.roll(GregorianCalendar.DAY_OF_MONTH, 1);
-                System.out.println(new java.util.Date(gc.getTimeInMillis()));
-                //pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
-                // add(pb, receitaoudespesa);
+                    pb.setParData(new java.sql.Date(gc.getTimeInMillis()));
+                    add(pb, receitaoudespesa);
+
+                    gc.add(GregorianCalendar.YEAR, 1);
+                }
+
             }
 
         }
@@ -320,19 +470,18 @@ public class DespesasReceitasCONTROLE {
 
     }
 
-    public void deleta(int codigo, boolean tipo){
-        rdd= new ReceitaDespesaDAO();
-        pdao= new ParcelaDAO();
-        if(tipo==DESPESA){
+    public void deleta(int codigo, boolean tipo) {
+        rdd = new ReceitaDespesaDAO();
+        pdao = new ParcelaDAO();
+        if (tipo == DESPESA) {
             pdao.deletaParcelaDespesa(codigo);
             rdd.deletaDespesa(codigo);
-        }
-        else if(tipo==RECEITA){
-            
+        } else if (tipo == RECEITA) {
+
             pdao.deletaParcelaReceita(codigo);
             rdd.deletaReceita(codigo);
-            
-        }   
-    
+
+        }
+
     }
 }

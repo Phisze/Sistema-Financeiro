@@ -5,29 +5,18 @@
  */
 package sf.visao;
 
-import java.awt.Font;
 import java.util.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.text.MaskFormatter;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import sf.controle.DespesasReceitasCONTROLE;
 import sf.controle.GerenciarCategoriaCONTROLE;
 import sf.modelo.CategoriaBEAN;
-import sf.modelo.CategoriaDAO;
 import sf.modelo.DespesaBEAN;
-import sf.modelo.ParcelaBEAN;
-import sf.modelo.ParcelaDAO;
 import sf.modelo.ReceitaBEAN;
-import sf.modelo.ReceitaDespesaDAO;
 
 /**
  *
@@ -68,6 +57,10 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
         initComponents();
         meuInit();
         //      System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+        AutoCompleteDecorator.decorate(this.jComboCat);
+        AutoCompleteDecorator.decorate(this.jComboTempo);
+        AutoCompleteDecorator.decorate(this.jComboNumero);
+        AutoCompleteDecorator.decorate(this.jComboPeriodo);
 
     }
 
@@ -91,23 +84,22 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jRadioDespesa.setSelected(true);
 
-       carregaLancamentos();
-       
+        carregaLancamentos();
 
     }
 
     public void carregaLancamentos() {
         despesas = drc.pegaDespesa();
         receitas = drc.pegaReceita();
-        
+
         String[] colunas = new String[]{"Valor", "Data", "Categoria", "Pago", "Descrição"};
 
         DefaultTableModel tablemodel = new DefaultTableModel(null, colunas);
 
-        String[] linha=new String[]{"","","",""};
+        String[] linha = new String[]{"", "", "", ""};
 
         for (DespesaBEAN c : despesas) {
-            
+
             String pago;
 
             if (c.getDesPago() == true) {
@@ -115,14 +107,14 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 pago = "Não";
             }
-           
-            double valor=drc.getValor(c.getDesCod(),DESPESA);
+
+            double valor = drc.getValor(c.getDesCod(), DESPESA);
             linha = new String[]{
-                valor+"",
-                drc.getData(c.getDesCod(), DESPESA)+"", 
-                drc.getCat(c.getDes_catCod())+"",
-                pago+"", 
-                c.getDesDesc()+""
+                valor + "",
+                drc.getData(c.getDesCod(), DESPESA) + "",
+                drc.getCat(c.getDes_catCod()) + "",
+                pago + "",
+                c.getDesDesc() + ""
             };
             tablemodel.addRow(linha);
         }
@@ -140,15 +132,15 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 pago = "Não";
             }
-            
+
             linha = new String[]{String.valueOf(drc.getValor(r.getRecCod(), RECEITA)),
-                drc.getData(r.getRecCod(), RECEITA), 
-                drc.getCat(r.getRec_catCod()), 
+                drc.getData(r.getRecCod(), RECEITA),
+                drc.getCat(r.getRec_catCod()),
                 pago,
                 r.getRecDesc()};
             tablemodel.addRow(linha);
         }
-      
+
         jtReceita.setModel(tablemodel);
 
     }
@@ -192,7 +184,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
     public void botaoExcluir() {
         int cod;
-        
+
         if (index >= 0) {
             System.out.println(index);
             if (DRATT == DESPESA) {
@@ -200,13 +192,13 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             } else {
                 cod = receitas.get(index).getRecCod();
             }
-        
+
             drc.deleta(cod, DRATT);
             index = -10;
         } else {
             JOptionPane.showMessageDialog(null, "Você não selecionou um lançamento", "Notificação", WIDTH);
         }
-        
+
     }
 
     public void botaoAtualizar() {
@@ -297,21 +289,18 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
                 }
 
-            } else {
-                if (jRadioDespesa.isSelected()) {
+            } else if (jRadioDespesa.isSelected()) {
 
-                    drc.adicionaDespesa(DESCRICAO, PAGO, 1, false);
-                    drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, DESPESA, TIPO_AVISTA);
+                drc.adicionaDespesa(DESCRICAO, PAGO, 1, false);
+                drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, DESPESA, TIPO_AVISTA);
 
-                } else if (jRadioReceita.isSelected()) {
-                    drc.adicionaReceita(DESCRICAO, PAGO, 1, false);
-                    drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, RECEITA, TIPO_AVISTA);
-
-                }
+            } else if (jRadioReceita.isSelected()) {
+                drc.adicionaReceita(DESCRICAO, PAGO, 1, false);
+                drc.adicionaParcela(VALOR, DATAFINAL, PAGO, 1, -1, RECEITA, TIPO_AVISTA);
 
             }
         }
-     
+
     }
 
     /**
@@ -454,7 +443,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Número de parcelas:");
 
-        jComboNumero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        jComboNumero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
 
         jComboTempo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dias", "semanas", "meses", "bimestres", "trimestres", "semestres", "anos" }));
 
@@ -677,6 +666,11 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Cancelar.png"))); // NOI18N
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -764,10 +758,11 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         // TODO add your handling code here:
         //   BotaoInserir();
-        botaoInserir();
-        carregaLancamentos();
-        
-
+         botaoInserir();
+         carregaLancamentos();
+       
+         
+         
 
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
@@ -828,6 +823,11 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         botaoAtualizar();
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

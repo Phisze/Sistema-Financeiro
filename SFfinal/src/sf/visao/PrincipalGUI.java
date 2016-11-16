@@ -215,15 +215,19 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jButton9 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
+        jButton8 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        jButton7 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -336,7 +340,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(130, 30, 160, 20);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas a Vencer", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas a Vencer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel2.setForeground(new java.awt.Color(0, 51, 255));
         jPanel2.setLayout(null);
 
@@ -359,12 +363,16 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jScrollPane6.setViewportView(jTable6);
 
         jPanel2.add(jScrollPane6);
-        jScrollPane6.setBounds(20, 40, 260, 160);
+        jScrollPane6.setBounds(20, 40, 260, 140);
+
+        jButton9.setText("Pagar");
+        jPanel2.add(jButton9);
+        jButton9.setBounds(110, 190, 61, 23);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(700, 70, 300, 220);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas a Receber", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas a Receber", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel3.setForeground(new java.awt.Color(0, 51, 255));
         jPanel3.setLayout(null);
 
@@ -387,12 +395,16 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jScrollPane7.setViewportView(jTable7);
 
         jPanel3.add(jScrollPane7);
-        jScrollPane7.setBounds(20, 40, 260, 160);
+        jScrollPane7.setBounds(20, 40, 260, 140);
+
+        jButton8.setText("Pagar");
+        jPanel3.add(jButton8);
+        jButton8.setBounds(110, 190, 61, 23);
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(702, 310, 300, 220);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas em Atraso", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas em Atraso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(0, 51, 255));
         jPanel4.setLayout(null);
 
@@ -415,12 +427,16 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jScrollPane5.setViewportView(jTable5);
 
         jPanel4.add(jScrollPane5);
-        jScrollPane5.setBounds(20, 40, 260, 160);
+        jScrollPane5.setBounds(20, 40, 260, 140);
+
+        jButton7.setText("Pagar");
+        jPanel4.add(jButton7);
+        jButton7.setBounds(110, 190, 61, 23);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(20, 310, 300, 220);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas em Atraso", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas em Atraso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel5.setForeground(new java.awt.Color(0, 51, 255));
         jPanel5.setLayout(null);
 
@@ -443,7 +459,11 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTable4);
 
         jPanel5.add(jScrollPane4);
-        jScrollPane4.setBounds(20, 40, 260, 160);
+        jScrollPane4.setBounds(20, 40, 260, 140);
+
+        jButton2.setText("Pagar");
+        jPanel5.add(jButton2);
+        jButton2.setBounds(110, 190, 61, 23);
 
         jPanel1.add(jPanel5);
         jPanel5.setBounds(20, 70, 300, 220);
@@ -742,10 +762,14 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
