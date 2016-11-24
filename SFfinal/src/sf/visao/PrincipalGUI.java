@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+
 import sf.controle.DespesasReceitasCONTROLE;
 import sf.controle.GerenciarCategoriaCONTROLE;
 import sf.controle.PrincipalCONTROLE;
@@ -28,6 +30,8 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private boolean DESPESA = true;
     private boolean RECEITA = false;
+    private boolean ATRASO = true;
+    private boolean ARECEBER = false;
     
     private DespesasReceitasCONTROLE drc= new DespesasReceitasCONTROLE();
     private PrincipalCONTROLE pc = new PrincipalCONTROLE();
@@ -162,7 +166,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel(null, colunas);
 
         
-        pb = pc.retornaParcelas(DESPESA);
+        pb = pc.retornaParcelas(RECEITA);
         for(ParcelaBEAN p: pb){
             if(p.getParData().after(new Date(System.currentTimeMillis()))){
                 String categoria="";
@@ -203,6 +207,8 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton4 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
+        jButton10 = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JToolBar.Separator();
         jButton5 = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
         jButton6 = new javax.swing.JButton();
@@ -215,19 +221,15 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
-        jButton9 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
-        jButton8 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
-        jButton7 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -238,6 +240,8 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -285,6 +289,19 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton4);
         jToolBar1.add(jSeparator4);
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Novo Relatório.png"))); // NOI18N
+        jButton10.setText("Novo Relatório");
+        jButton10.setFocusable(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton10);
+        jToolBar1.add(jSeparator7);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Check Book-28 (2).png"))); // NOI18N
         jButton5.setText("Editar Categoria");
@@ -340,7 +357,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(130, 30, 160, 20);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas a Vencer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas a Vencer", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel2.setForeground(new java.awt.Color(0, 51, 255));
         jPanel2.setLayout(null);
 
@@ -365,14 +382,10 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel2.add(jScrollPane6);
         jScrollPane6.setBounds(20, 40, 260, 140);
 
-        jButton9.setText("Pagar");
-        jPanel2.add(jButton9);
-        jButton9.setBounds(110, 190, 61, 23);
-
         jPanel1.add(jPanel2);
         jPanel2.setBounds(700, 70, 300, 220);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas a Receber", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas a Receber", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel3.setForeground(new java.awt.Color(0, 51, 255));
         jPanel3.setLayout(null);
 
@@ -397,14 +410,10 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel3.add(jScrollPane7);
         jScrollPane7.setBounds(20, 40, 260, 140);
 
-        jButton8.setText("Pagar");
-        jPanel3.add(jButton8);
-        jButton8.setBounds(110, 190, 61, 23);
-
         jPanel1.add(jPanel3);
         jPanel3.setBounds(702, 310, 300, 220);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas em Atraso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Receitas em Atraso", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(0, 51, 255));
         jPanel4.setLayout(null);
 
@@ -429,14 +438,10 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel4.add(jScrollPane5);
         jScrollPane5.setBounds(20, 40, 260, 140);
 
-        jButton7.setText("Pagar");
-        jPanel4.add(jButton7);
-        jButton7.setBounds(110, 190, 61, 23);
-
         jPanel1.add(jPanel4);
         jPanel4.setBounds(20, 310, 300, 220);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas em Atraso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Contas em Atraso", 0, 0, new java.awt.Font("Tahoma", 0, 14), new java.awt.Color(0, 51, 255))); // NOI18N
         jPanel5.setForeground(new java.awt.Color(0, 51, 255));
         jPanel5.setLayout(null);
 
@@ -461,14 +466,9 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel5.add(jScrollPane4);
         jScrollPane4.setBounds(20, 40, 260, 140);
 
-        jButton2.setText("Pagar");
-        jPanel5.add(jButton2);
-        jButton2.setBounds(110, 190, 61, 23);
-
         jPanel1.add(jPanel5);
         jPanel5.setBounds(20, 70, 300, 220);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Saving Book-28.png"))); // NOI18N
         jMenu2.setText("Cadastrar");
         jMenu2.setToolTipText("");
 
@@ -493,7 +493,6 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Lançar.png"))); // NOI18N
         jMenu3.setText("Lançar");
         jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -536,7 +535,6 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Editar.png"))); // NOI18N
         jMenu5.setText("Editar");
         jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -569,15 +567,28 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("Relatório");
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icone/Relatório2.png"))); // NOI18N
+        jMenuItem2.setText("Criar Relatório");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1048, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1047, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -587,7 +598,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
         );
 
         pack();
@@ -621,13 +632,15 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-         new ReceitaDespesaGUI().setVisible(true);
+         ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked
         // TODO add your handling code here:
-        int index=jTable4.getSelectedRow();
-        pc.pagaParcela(index, DESPESA);
+         int index = jTable4.getSelectedRow();
+        pc.pagaParcela(index, DESPESA, ATRASO);
         preencheTableContasAtraso();
         meuInit();
     }//GEN-LAST:event_jTable4MouseClicked
@@ -635,24 +648,24 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
         // TODO add your handling code here:
         
-        int index=jTable5.getSelectedRow();
-        pc.pagaParcela(index, RECEITA);
-         preencheTableReceitasAtraso();
-         meuInit();
+        int index = jTable5.getSelectedRow();
+        pc.pagaParcela(index, RECEITA, ATRASO);
+        preencheTableReceitasAtraso();
+        meuInit();
     }//GEN-LAST:event_jTable5MouseClicked
 
     private void jTable6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable6MouseClicked
         // TODO add your handling code here:
-        int index=jTable6.getSelectedRow();
-        pc.pagaParcela(index, DESPESA);
+        int index = jTable6.getSelectedRow();
+        pc.pagaParcela(index, DESPESA, ARECEBER);
         preencheTableContasVencer();
         meuInit();
     }//GEN-LAST:event_jTable6MouseClicked
 
     private void jTable7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable7MouseClicked
         // TODO add your handling code here:
-         int index=jTable7.getSelectedRow();
-        pc.pagaParcela(index, RECEITA);
+        int index = jTable7.getSelectedRow();
+        pc.pagaParcela(index, RECEITA, ARECEBER);
         preencheTableReceitasVencer();
         meuInit();
         
@@ -670,32 +683,44 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+        ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+       ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+        ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jMenuItem4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseClicked
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+        ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem4MouseClicked
 
     private void jMenuItem5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem5MouseClicked
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+        ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem5MouseClicked
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
-        new ReceitaDespesaGUI().setVisible(true);
+        ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenu5MouseClicked
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
@@ -705,18 +730,36 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
         // TODO add your handling code here:
-         new ReceitaDespesaGUI().setVisible(true);
+         ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
         // TODO add your handling code here:
-         new ReceitaDespesaGUI().setVisible(true);
+         ReceitaDespesaGUI rd = new ReceitaDespesaGUI();
+        rd.setContext(this);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         meuInit();
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        GerarRelatorioGUI gr = new GerarRelatorioGUI();
+
+        gr.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        GerarRelatorioGUI gr = new GerarRelatorioGUI();
+
+        gr.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -762,14 +805,11 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -780,8 +820,10 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -800,6 +842,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;

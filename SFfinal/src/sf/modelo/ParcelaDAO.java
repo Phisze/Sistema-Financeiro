@@ -142,7 +142,6 @@ public class ParcelaDAO {
     }
 
     public ArrayList<ParcelaBEAN> getParcela(int codigo, boolean tipo) {
-        
         String sql = " ";
 
         if (tipo == DESPESA) {
@@ -151,11 +150,11 @@ public class ParcelaDAO {
 
         } else if (tipo == RECEITA) {
 
-            sql = "select * from parcela where par_recCod=?;";
+            sql = "select * from parcela where par_recCod=?";
 
         }
 
-        ArrayList<ParcelaBEAN> p = new ArrayList<ParcelaBEAN>();
+        ArrayList<ParcelaBEAN> p = new ArrayList();
 
         try {
 
@@ -165,24 +164,38 @@ public class ParcelaDAO {
             ResultSet rs = stmt.executeQuery();
 
             rs.first();
-            if (rs.first()) {
-                ParcelaBEAN p1 = new ParcelaBEAN();
-                p1.setParCod(rs.getInt("parCod"));
-                p1.setPar_recCod(rs.getInt("par_recCod"));
-                p1.setPar_desCod(rs.getInt("par_desCod"));
-                p1.setParData(rs.getDate("parData"));
-                p1.setParParcelaPaga(rs.getBoolean("parParcelaPaga"));
-                p1.setParValor(rs.getDouble("parValor"));
-                p.add(p1);
-               
-            }
+
+            ParcelaBEAN p1 = new ParcelaBEAN();
+            p1.setParCod(rs.getInt("parCod"));
+            p1.setPar_recCod(rs.getInt("par_recCod"));
+            p1.setPar_desCod(rs.getInt("par_desCod"));
+            p1.setParData(rs.getDate("parData"));
+            p1.setParParcelaPaga(rs.getBoolean("parParcelaPaga"));
+            p1.setParValor(rs.getDouble("parValor"));
+            p.add(p1);
+
         } catch (Exception e) {
 
             throw new RuntimeException(e);
 
         }
-  
         return p;
+    }
+    
+    public void atualizaStatusParcela(int codigo){
+        String sql = "update parcela set parParcelaPaga=1 where parCod=?;";
+        try{
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+            
+            stmt.execute();
+            stmt.close();
+        }
+        catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+    }
     }
 
     public ArrayList<ParcelaBEAN> getParcelaFixa() {
@@ -207,21 +220,6 @@ public class ParcelaDAO {
             throw new RuntimeException(e);
         }
         return p;
-    }
-
-    public void atualizaStatusParcela(int codigo) {
-        String sql = "update parcela set parParcelaPaga=1 where parCod=?;";
-        try {
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, codigo);
-
-            stmt.execute();
-            stmt.close();
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
     }
 
     public ArrayList<ParcelaBEAN> getParcela(int codigo) {
@@ -253,4 +251,6 @@ public class ParcelaDAO {
         }
         return p;
     }
+    
+    
 }

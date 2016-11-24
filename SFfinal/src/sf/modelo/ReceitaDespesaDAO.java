@@ -151,4 +151,35 @@ public class ReceitaDespesaDAO {
         }
         return d;
     }
+    public void pagaDespesa(int codigo) {
+        String sql = "update despesa set desPago=1 where desCod=?;";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+
+            stmt.execute();
+            stmt.close();
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+    
+    public void pagaReceita(int codigo) {
+        String sql = "update receita set recPago=1 where recCod=?;";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, codigo);
+
+            stmt.execute();
+            stmt.close();
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
 }

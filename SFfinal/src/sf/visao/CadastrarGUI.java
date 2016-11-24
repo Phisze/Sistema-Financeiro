@@ -179,7 +179,12 @@ public class CadastrarGUI extends javax.swing.JFrame {
 
         } else {
             for (int i = 0; i <= usuc.pegaUsu().getUsuarios().size(); i++) {
-                if (usuc.pegaUsu().getUsuarios().get(i).getUsuario().equals(usu)) {
+               if(usuc.pegaUsu().getUsuarios().isEmpty()){
+                    UsuarioCONTROLE uc = new UsuarioCONTROLE();
+                    this.mensagem(uc.cadastraUsuario(usu, senha1, senha2));
+                    break;
+               }
+                else if (usuc.pegaUsu().getUsuarios().get(i).getUsuario().equals(usu)) {
                     JOptionPane.showMessageDialog(null, "Nome já usado");
                     break;
                 } else {

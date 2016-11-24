@@ -47,7 +47,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         jButton4.setText("Cancelar");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());

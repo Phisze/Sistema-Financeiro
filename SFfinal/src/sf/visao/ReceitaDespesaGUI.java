@@ -5,10 +5,14 @@
  */
 package sf.visao;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -49,6 +53,8 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
     private final int TRIMESTRAL = 5;
     private final int SEMESTRAL = 6;
     private final int ANUAL = 7;
+    
+     private JFrame context;
 
     private ArrayList<DespesaBEAN> despesas;
     private ArrayList<ReceitaBEAN> receitas;
@@ -63,9 +69,28 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(this.jComboPeriodo);
 
     }
+    public void setContext(JFrame ctx) {
+        context = ctx;
+
+    }
 
     public void meuInit() {
 
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ((PrincipalGUI) context).meuInit();
+                ((PrincipalGUI) context).preencheTableContasAtraso();
+                ((PrincipalGUI) context).preencheTableContasVencer();
+                ((PrincipalGUI) context).preencheTableReceitasAtraso();
+                ((PrincipalGUI) context).preencheTableReceitasVencer();
+                dispose();
+            }
+        };
+        
+        this.addWindowListener(exitListener);
+        
         ArrayList<CategoriaBEAN> cb = drc.retornaCategoria();
 
         gcc = new GerenciarCategoriaCONTROLE();
@@ -360,7 +385,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
 
         jLabel1.setText("Tipo de lançamento:");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dados do lançamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dados do lançamento", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
         jLabel3.setText("Data:");
 
@@ -400,7 +425,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Recorrência do lançamento:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Recorrência do lançamento:", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
         buttonGroup1.add(jRadioFixo);
         jRadioFixo.setText("Fixo");
@@ -439,7 +464,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelParcela.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Parcelada", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
+        jPanelParcela.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Parcelada", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 204))); // NOI18N
 
         jLabel7.setText("Número de parcelas:");
 
@@ -470,7 +495,7 @@ public class ReceitaDespesaGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelFixo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fixo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 255))); // NOI18N
+        jPanelFixo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fixo", 0, 0, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 0, 255))); // NOI18N
 
         jLabel8.setText("Repetir");
 
