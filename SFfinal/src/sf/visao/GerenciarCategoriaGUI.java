@@ -342,7 +342,7 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ArrayList<CategoriaBEAN> cb = gcc.pegaCat();
+         ArrayList<CategoriaBEAN> cb = gcc.pegaCat();
         gcc = new GerenciarCategoriaCONTROLE();
         int confirma = JOptionPane.showConfirmDialog(null, "Voce tem certeza que quer deletar essa categoria (Ela irá deletar todos as suas contas que estão refeciadas a ela)?", "Deleção", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
@@ -359,7 +359,14 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
                     //        cat.setCatNome(jtNome.getText());
                     //     gcc.deletaCategoria(buscaCodUsandoNome());
                     model.removeRow(jTableCat.getSelectedRow());
-                } else if (gcc.deletaD().getDespesa().size() > 1 && gcc.deletaD().getReceita().size() > 1 && gcc.deletaD().getDespesa().get(i).getDes_catCod() != cb.get(categoriaIndex).getCatCod() || gcc.deletaD().getReceita().get(i).getRec_catCod() != cb.get(categoriaIndex).getCatCod()) {
+
+                } else if (gcc.deletaD().getDespesa().get(i).getDes_catCod() == cb.get(categoriaIndex).getCatCod() && gcc.deletaD().getReceita().isEmpty()) {
+                    System.out.println("Chego 1");
+                    gcc.deletaP().deletaParcelaDespesa(gcc.deletaD().getDespesa().get(i).getDesCod());
+                    System.out.println("Chego 2");
+                    gcc.deletaD().deletaDespesa(gcc.deletaD().getDespesa().get(i).getDesCod());
+                    System.out.println("Cat Index " + categoriaIndex);
+                    System.out.println("Chego 3");
                     gcc.deletaCategoria(categoriaIndex);
                     System.out.println("Chego 4");
                     //     gcc.verificaDeletado().deletaDespesa(categoriaIndex);
@@ -369,7 +376,29 @@ public class GerenciarCategoriaGUI extends javax.swing.JFrame {
                     //        cat.setCatNome(jtNome.getText());
                     //     gcc.deletaCategoria(buscaCodUsandoNome());
                     model.removeRow(jTableCat.getSelectedRow());
-                } else if (gcc.deletaD().getDespesa().get(i).getDes_catCod() == cb.get(categoriaIndex).getCatCod() || gcc.deletaD().getReceita().get(i).getRec_catCod() == cb.get(categoriaIndex).getCatCod()) {
+                    
+                } else if (gcc.deletaD().getDespesa().isEmpty() && gcc.deletaD().getReceita().get(i).getRec_catCod() == cb.get(categoriaIndex).getCatCod()) {
+                    System.out.println("Chego 1");
+                    gcc.deletaP().deletaParcelaReceita(gcc.deletaD().getReceita().get(i).getRecCod());
+                    System.out.println("Chego 2");
+                    System.out.println("Cat Index " + categoriaIndex);
+                    System.out.println("Chego 3");
+
+                    System.out.println("Chego 6");
+                    gcc.deletaD().deletaReceita(gcc.deletaD().getReceita().get(i).getRecCod());
+                    System.out.println("Chego 7");
+
+                    gcc.deletaCategoria(categoriaIndex);
+                    System.out.println("Chego 4");
+                    //     gcc.verificaDeletado().deletaDespesa(categoriaIndex);
+                    System.out.println("Chego 5");
+                    DefaultTableModel model = (DefaultTableModel) jTableCat.getModel();
+                    //          CategoriaBEAN cat = new CategoriaBEAN();
+                    //        cat.setCatNome(jtNome.getText());
+                    //     gcc.deletaCategoria(buscaCodUsandoNome());
+                    model.removeRow(jTableCat.getSelectedRow());
+
+                } else if (gcc.deletaD().getDespesa().get(i).getDes_catCod() == cb.get(categoriaIndex).getCatCod() && gcc.deletaD().getReceita().get(i).getRec_catCod() == cb.get(categoriaIndex).getCatCod()) {
                     System.out.println("Chego 1");
                     gcc.deletaP().deletaParcelaDespesa(gcc.deletaD().getDespesa().get(i).getDesCod());
                     gcc.deletaP().deletaParcelaReceita(gcc.deletaD().getReceita().get(i).getRecCod());
